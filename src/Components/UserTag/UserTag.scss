@@ -1,0 +1,12 @@
+.user-tag{
+    margin-top: 1rem;
+    display: flex;
+    background-color: rgb(226, 126, 126);
+    border-radius: 15px;
+    padding: 0.5rem;
+    cursor: pointer;  
+}
+
+.selected{
+    background-color: rgb(126, 235, 99);
+}

@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+  --header-height: 120px;
+
+  .app-header{
+    height: var(--header-height);
+  }
+  .user-tags{
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+  }
+
+  .select-team-section{
+    display: flex;
+    height: calc(99vh - var(--header-height));
+    box-sizing: border-box;
+
+    .player-cards{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 95%;
+      flex: 3;
+      box-sizing: border-box;
+      overflow-y: scroll;
+
+    }
+
+    .lineups{
+      flex: 2;
+      overflow-y: scroll;
+    }
+  }
+
+}
+
+h1, h2 ,h3 ,h4 ,h5 ,p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

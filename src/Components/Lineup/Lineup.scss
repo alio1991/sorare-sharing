@@ -1,0 +1,43 @@
+.lineup{
+    background-color: rgb(17, 196, 77);
+    position: relative;
+    border: 1px solid black;
+    height: 900px;
+    margin: 1rem 0;
+
+    .slot{
+        position: absolute;
+        width: 150px;
+        height: 200px;
+        background-color: grey;
+        border-radius: 1rem;
+    }
+
+    .lineup-total-score{
+        top: 0;
+    }
+
+    .goalkeeper{
+        bottom: 50px;
+        left: calc(50% - 75px);
+    }
+    .defender{
+        left: 50px;
+        bottom: 300px;
+    }
+
+    .midifier{
+        right: 50px;
+        bottom: 300px;
+    }
+
+    .forward{
+        top: 50px;
+        left: 50px;
+    }
+
+    .extra{
+        top: 50px;
+        right: 50px;
+    }
+}

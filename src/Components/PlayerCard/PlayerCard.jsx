@@ -12,7 +12,7 @@ export function PlayerCard({cardId}){
     if(card){
         return(
             <div 
-                className="player-card"
+                className={`player-card ${card.positionTyped.toLowerCase()}`}
                 draggable="true"
                 onDragStart={handleDragStart}
             >
@@ -44,3 +44,5 @@ export function PlayerCard({cardId}){
         }
     }
 }
+
+

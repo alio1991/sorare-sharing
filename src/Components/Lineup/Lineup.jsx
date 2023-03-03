@@ -20,7 +20,7 @@ export function Lineup(){
 
     const [extraId, setextraId] = useState(null)
     const [forwardId, setforwardId] = useState(null)
-    const [midifierId, setmidifierId] = useState(null)
+    const [midfielderId, setmidfielderId] = useState(null)
     const [defenderId, setvdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
@@ -35,8 +35,8 @@ export function Lineup(){
             <div className="slot forward" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setforwardId, "forward")}>
                 {forwardId ? <PlayerCard cardId={forwardId}></PlayerCard> : "Delantero"}
             </div>
-            <div className="slot midifier" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidifierId, "midifier")}>
-                {midifierId ? <PlayerCard cardId={midifierId}></PlayerCard> : "Medio"}
+            <div className="slot midfielder" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
+                {midfielderId ? <PlayerCard cardId={midfielderId}></PlayerCard> : "Medio"}
             </div>
             <div className="slot defender" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setvdefenderId, "defender")}>
                 {defenderId ? <PlayerCard cardId={defenderId}></PlayerCard> : "Defensa"}

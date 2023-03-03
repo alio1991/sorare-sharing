@@ -4,7 +4,7 @@ import { allPlayers, users } from "./store";
 export const availablePlayers = new BehaviorSubject([]);
 export const filteredAvailablePlayers = new BehaviorSubject([]);
 export const lineups = new BehaviorSubject([]);
-const positionList = ['extra', 'midifier', 'forward', 'defender', 'goalkeeper']
+const positionList = ['extra', 'midfielder', 'forward', 'defender', 'goalkeeper']
 
 let subscribedFlag = true;
 
@@ -14,7 +14,7 @@ const lineupBase = {
     forward: null,
     defender: null,
     goalkeeper: null,
-    midifier: null,
+    midfielder: null,
     totalScore: 0
 };
 
@@ -60,7 +60,7 @@ function calculateTotalScore(lineupId){
     lineups.next(lineupsCopy)
 }
 
-function deletePlayerFromAvailables(playerId){
+export function deletePlayerFromAvailables(playerId){
     availablePlayers.next(availablePlayers.value.filter(player => player.id !== playerId))
 }
 

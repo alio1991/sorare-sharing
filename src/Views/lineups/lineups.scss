@@ -1,0 +1,54 @@
+.lineups-view {
+    text-align: center;
+    --header-height: 120px;
+  
+    .app-header{
+      height: var(--header-height);
+  
+      .app-subheader{
+        display: flex;
+        .rubbish{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(235, 131, 131);
+          width: 200px;
+          height: 50px;
+          margin-right: 50px;
+          color: white;
+          font-weight: bold;
+          font-size: 1.5rem;
+          border-style: dashed;
+          border: 1px dashed black;
+        }
+        .user-tags{
+          display: flex;
+          justify-content: space-around;
+          width: 95%;
+        }
+      }
+    }
+  
+    .select-team-section{
+      display: flex;
+      height: calc(99vh - var(--header-height));
+      box-sizing: border-box;
+  
+      .player-cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 95%;
+        flex: 3;
+        box-sizing: border-box;
+        overflow-y: scroll;
+  
+      }
+  
+      .lineups{
+        flex: 2;
+        overflow-y: scroll;
+      }
+    }
+  
+  }

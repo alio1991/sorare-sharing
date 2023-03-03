@@ -25,9 +25,6 @@ export function Lineup(){
     const [defenderId, setvdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
-    const diffScore = (score) => {
-        return score-240;
-    }
 
     return(
         <div className="lineup">

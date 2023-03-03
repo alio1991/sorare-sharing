@@ -3,6 +3,7 @@ import { allPlayers, users } from "./store";
 
 export const availablePlayers = new BehaviorSubject([]);
 export const filteredAvailablePlayers = new BehaviorSubject([]);
+export const rejectedPlayers = new BehaviorSubject([]);
 export const lineups = new BehaviorSubject([]);
 const positionList = ['extra', 'midfielder', 'forward', 'defender', 'goalkeeper']
 
@@ -61,6 +62,12 @@ function calculateTotalScore(lineupId){
 
 export function deletePlayerFromAvailables(playerId){
     availablePlayers.next(availablePlayers.value.filter(player => player.id !== playerId))
+    rejectedPlayers.next([...rejectedPlayers.value, allPlayers.value.find(player => player.id === playerId)])
+}
+
+export function restoreRejectedPlayer(playerId){
+    rejectedPlayers.next(rejectedPlayers.value.filter(player => player.id !== playerId))
+    availablePlayers.next([...availablePlayers.value, allPlayers.value.find(player => player.id === playerId)])
 }
 
 export function addNewLineup(lineupId){

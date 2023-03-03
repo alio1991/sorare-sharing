@@ -32,16 +32,16 @@ export function Lineup(){
             <div className="slot extra" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
                 {extraId ? <PlayerCard cardId={extraId}></PlayerCard> : "Extra"}
             </div>
-            <div className="slot forward" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setforwardId, "forward")}>
+            <div className="slot forward forward-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setforwardId, "forward")}>
                 {forwardId ? <PlayerCard cardId={forwardId}></PlayerCard> : "Delantero"}
             </div>
-            <div className="slot midfielder" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
+            <div className="slot midfielder midfielder-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
                 {midfielderId ? <PlayerCard cardId={midfielderId}></PlayerCard> : "Medio"}
             </div>
-            <div className="slot defender" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setvdefenderId, "defender")}>
+            <div className="slot defender defender-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setvdefenderId, "defender")}>
                 {defenderId ? <PlayerCard cardId={defenderId}></PlayerCard> : "Defensa"}
             </div>
-            <div className="slot goalkeeper" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setgoalkeeperId, "goalkeeper")}>
+            <div className="slot goalkeeper goalkeeper-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setgoalkeeperId, "goalkeeper")}>
                 {goalkeeperId ? <PlayerCard cardId={goalkeeperId}></PlayerCard> : "Portero"}
             </div>
         </div>

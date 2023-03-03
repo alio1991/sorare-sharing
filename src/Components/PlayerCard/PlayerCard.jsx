@@ -12,7 +12,7 @@ export function PlayerCard({cardId}){
     if(card){
         return(
             <div 
-                className={`player-card ${card.positionTyped.toLowerCase()}`}
+                className={`player-card ${card.positionTyped.toLowerCase()}-border`}
                 draggable="true"
                 onDragStart={handleDragStart}
             >

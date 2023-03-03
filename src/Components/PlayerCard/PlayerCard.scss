@@ -11,6 +11,7 @@
     width: 150px;
     height: 200px;
     overflow-y: hidden;
+    background-color: #f3e415;
 
     img{
         max-width: 145px;
@@ -67,15 +68,15 @@
     }
 }
 
-.goalkeeper{
+.goalkeeper-border{
     border: 5px solid green;
 }
-.defender{
+.defender-border{
     border: 5px solid  yellow;
 }
-.midfielder{
+.midfielder-border{
     border: 5px solid  orange;
 }
-.forward{
+.forward-border{
     border: 5px solid  red;
 }

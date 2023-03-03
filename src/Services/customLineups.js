@@ -32,7 +32,6 @@ function loadInitialPlayers(){
 export function addPlayerToLineup(playerId, lineupId, lineupPosition){
     deletePlayerFromAvailables(playerId);
     const playerIdInSelectedPosition = getLineup(lineupId)[lineupPosition];
-    console.log(getPlayer(playerIdInSelectedPosition));
     if(playerIdInSelectedPosition){
         availablePlayers.next([...availablePlayers.value, getPlayer(playerIdInSelectedPosition)])
     }

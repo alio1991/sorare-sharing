@@ -64,7 +64,5 @@ export function Lineup(){
     function setNewLineupData(lineupsValue, uniqueId){
         const totalScore = lineupsValue.find(lineup => lineup.id === uniqueId).totalScore;
         settotalScore(totalScore)
-        // console.log('lineupId',uniqueId);
-        // console.log('currentLineup',currentLineup.totalScore);
     }
 }

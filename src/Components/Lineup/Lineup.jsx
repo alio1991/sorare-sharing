@@ -55,7 +55,7 @@ export function Lineup(){
     function handleDrop(event, setSlot, position) {
         const cardId = event.dataTransfer.getData("text/html");
         const playerPosition = allPlayers.value.find(player => player.id===cardId).positionTyped;
-        if(playerPosition.toLowerCase() === position){
+        if(position==='extra' || playerPosition.toLowerCase() === position){
             setSlot(cardId);
             addPlayerToLineup(cardId, lineupId, position, setSlot)
         }

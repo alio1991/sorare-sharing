@@ -3,6 +3,7 @@ import { PlayerCard } from '../PlayerCard/PlayerCard';
 import './Lineup.scss';
 import {addNewLineup, addPlayerToLineup, lineups} from "../../Services/customLineups"
 import { v4 as uuidv4 } from 'uuid';
+import { allPlayers } from '../../../src/Services/store'
 
 export function Lineup(){
 
@@ -53,8 +54,11 @@ export function Lineup(){
     
     function handleDrop(event, setSlot, position) {
         const cardId = event.dataTransfer.getData("text/html");
-        setSlot(cardId);
-        addPlayerToLineup(cardId, lineupId, position, setSlot)
+        const playerPosition = allPlayers.value.find(player => player.id===cardId).positionTyped;
+        if(playerPosition.toLowerCase() === position){
+            setSlot(cardId);
+            addPlayerToLineup(cardId, lineupId, position, setSlot)
+        }
     }
 
     function setNewLineupData(lineupsValue, uniqueId){

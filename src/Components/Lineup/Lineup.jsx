@@ -25,10 +25,14 @@ export function Lineup(){
     const [defenderId, setvdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
+    const diffScore = (score) => {
+        return score-240;
+    }
+
     return(
         <div className="lineup">
             <div className="lineup-total-score">
-                <h1>{totalScore}</h1>
+                <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff green' : 'score-diff red'}>{240-totalScore}</h3>
             </div>
             <div className="slot extra" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
                 {extraId ? <PlayerCard cardId={extraId}></PlayerCard> : "Extra"}

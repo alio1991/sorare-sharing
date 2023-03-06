@@ -33,23 +33,23 @@ export function Lineup({id}){
                 <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff green' : 'score-diff red'}>{240-totalScore}</h3>
             </div>
             <div className="slot extra extra-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
-                <div onClick={()=> deleteCard('extra')} className="delete">X</div>
+                {extraId ? <div onClick={()=> deleteCard('extra', extraId)} className="delete">X</div> : ''}
                 {extraId ? <PlayerCard cardId={extraId}></PlayerCard> : "Extra"}
             </div>
             <div className="slot forward forward-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setforwardId, "forward")}>
-                <div onClick={()=> deleteCard('forward')} className="delete">X</div>
+                {forwardId ? <div onClick={()=> deleteCard('forward', forwardId)} className="delete">X</div> : ''}
                 {forwardId ? <PlayerCard cardId={forwardId}></PlayerCard> : "Delantero"}
             </div>
             <div className="slot midfielder midfielder-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
-                <div onClick={()=> deleteCard('midfielder')} className="delete">X</div>
+                {midfielderId ? <div onClick={()=> deleteCard('midfielder', midfielderId)} className="delete">X</div> : ''}
                 {midfielderId ? <PlayerCard cardId={midfielderId}></PlayerCard> : "Medio"}
             </div>
             <div className="slot defender defender-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setdefenderId, "defender")}>
-                <div onClick={()=> deleteCard('defender')} className="delete">X</div>
+                {defenderId ? <div onClick={()=> deleteCard('defender', defenderId)} className="delete">X</div> : ''}
                 {defenderId ? <PlayerCard cardId={defenderId}></PlayerCard> : "Defensa"}
             </div>
             <div className="slot goalkeeper goalkeeper-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setgoalkeeperId, "goalkeeper")}>
-                <div onClick={()=> deleteCard('goalkeeper')} className="delete">X</div>
+                {goalkeeperId ? <div onClick={()=> deleteCard('goalkeeper', goalkeeperId)} className="delete">X</div> : ''}
                 {goalkeeperId ? <PlayerCard cardId={goalkeeperId}></PlayerCard> : "Portero"}
             </div>
         </div>
@@ -82,7 +82,9 @@ export function Lineup({id}){
         settotalScore(totalScore)
     }
 
-    function deleteCard(position){
-        deleteCardFromLineup(position, id)
+    function deleteCard(position, cardId){
+        if(cardId){
+            deleteCardFromLineup(position, id)
+        }
     }  
 }

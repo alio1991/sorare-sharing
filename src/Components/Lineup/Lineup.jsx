@@ -1,28 +1,29 @@
 import { useEffect, useState } from 'react';
 import { PlayerCard } from '../PlayerCard/PlayerCard';
 import './Lineup.scss';
-import {addNewLineup, addPlayerToLineup, lineups} from "../../Services/customLineups"
-import { v4 as uuidv4 } from 'uuid';
+import {addPlayerToLineup, lineups} from "../../Services/customLineups"
 import { allPlayers } from '../../../src/Services/store'
 
-export function Lineup(){
+export function Lineup({id}){
 
     const [lineupId, setlineupId] = useState(null)
     const [totalScore, settotalScore] = useState(0)
 
     useEffect(() => {
-        const uniqueId = uuidv4();
-        setlineupId(uniqueId)
-        addNewLineup(uniqueId)
-        lineups.subscribe(lineupsValue => {
-            setNewLineupData(lineupsValue, uniqueId);
-        })
-    }, [])
+        if(id){
+            if (lineupId===null) {
+                setlineupId(id)
+                lineups.subscribe(lineupsValue => {
+                    setNewLineupData(lineupsValue, id);
+                })
+            }   
+        }
+    }, [id])
 
     const [extraId, setextraId] = useState(null)
     const [forwardId, setforwardId] = useState(null)
     const [midfielderId, setmidfielderId] = useState(null)
-    const [defenderId, setvdefenderId] = useState(null)
+    const [defenderId, setdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
 
@@ -40,7 +41,7 @@ export function Lineup(){
             <div className="slot midfielder midfielder-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
                 {midfielderId ? <PlayerCard cardId={midfielderId}></PlayerCard> : "Medio"}
             </div>
-            <div className="slot defender defender-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setvdefenderId, "defender")}>
+            <div className="slot defender defender-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setdefenderId, "defender")}>
                 {defenderId ? <PlayerCard cardId={defenderId}></PlayerCard> : "Defensa"}
             </div>
             <div className="slot goalkeeper goalkeeper-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setgoalkeeperId, "goalkeeper")}>
@@ -56,14 +57,23 @@ export function Lineup(){
     function handleDrop(event, setSlot, position) {
         const cardId = event.dataTransfer.getData("text/html");
         const playerPosition = allPlayers.value.find(player => player.id===cardId).positionTyped;
-        if(position==='extra' || playerPosition.toLowerCase() === position){
-            setSlot(cardId);
+        if((position==='extra' && playerPosition!=='Goalkeeper')|| playerPosition.toLowerCase() === position){
             addPlayerToLineup(cardId, lineupId, position, setSlot)
         }
     }
 
-    function setNewLineupData(lineupsValue, uniqueId){
-        const totalScore = lineupsValue.find(lineup => lineup.id === uniqueId).totalScore;
+    function setNewLineupData(lineupsValue, id){
+        const lineup = lineupsValue.find(lineup => lineup.id === id);
+        //Set Players
+        if(lineup){
+            setgoalkeeperId(lineup.goalkeeper ?? null)
+            setdefenderId(lineup.defender ?? null)
+            setmidfielderId(lineup.midfielder ?? null)
+            setforwardId(lineup.forward ?? null)
+            setextraId(lineup.extra ?? null)
+        }
+        //Set Score
+        const totalScore = lineupsValue.find(lineup => lineup.id === id)?.totalScore;
         settotalScore(totalScore)
     }
 }

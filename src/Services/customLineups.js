@@ -7,7 +7,7 @@ export const rejectedPlayers = new BehaviorSubject([]);
 export const lineups = new BehaviorSubject([]);
 const positionList = ['extra', 'midfielder', 'forward', 'defender', 'goalkeeper']
 
-let subscribedFlag = true;
+let copyAllPlayersFlag = true;
 
 const lineupBase = {
     id: null,
@@ -19,19 +19,29 @@ const lineupBase = {
     totalScore: 0
 };
 
-loadInitialPlayers();
+copyAllPlayersFromLocalStorage();
+continiousCopyToLocalStorage();
 
-function loadInitialPlayers(){
-    if(subscribedFlag) {
-        allPlayers.subscribe(players => availablePlayers.next(players));
-        availablePlayers.subscribe(players => filteredAvailablePlayers.next(players.filter(player => users.value.includes(player.owner))))
-        subscribedFlag = false;
+
+export function loadInitialPlayers(){
+
+}
+
+function copyAllPlayersFromLocalStorage(){
+    if(copyAllPlayersFlag) {
+        allPlayers.subscribe(players => {availablePlayers.next(filterPlayersNotAvailable(players)); localStorage.setItem('AllPlayers', JSON.stringify(players))});
+        availablePlayers.subscribe(players => {filteredAvailablePlayers.next(players.filter(player => users.value.includes(player.owner))); localStorage.setItem('AvailablePlayers', JSON.stringify(players))})
         users.subscribe(users => filteredAvailablePlayers.next(availablePlayers.value.filter(player => users.includes(player.owner))))
+        allPlayers.next(JSON.parse(localStorage.getItem('AllPlayers')) || [])
+        availablePlayers.next(JSON.parse(localStorage.getItem('AvailablePlayers')) || [])
+        copyAllPlayersFlag = false;
+        getLineupsFromLocalStorage()
     }
 }
 
 export function addPlayerToLineup(playerId, lineupId, lineupPosition){
-    deletePlayerFromAvailables(playerId);
+    selectPlayerFromAvailables(playerId);
+    console.log( getLineup(lineupId), lineupId);
     const playerIdInSelectedPosition = getLineup(lineupId)[lineupPosition];
     if(playerIdInSelectedPosition){
         availablePlayers.next([...availablePlayers.value, getPlayer(playerIdInSelectedPosition)])
@@ -60,7 +70,11 @@ function calculateTotalScore(lineupId){
     lineups.next(lineupsCopy)
 }
 
-export function deletePlayerFromAvailables(playerId){
+export function selectPlayerFromAvailables(playerId){
+    availablePlayers.next(availablePlayers.value.filter(player => player.id !== playerId))
+}
+
+export function rejectFromAvailables(playerId){
     availablePlayers.next(availablePlayers.value.filter(player => player.id !== playerId))
     rejectedPlayers.next([...rejectedPlayers.value, allPlayers.value.find(player => player.id === playerId)])
 }
@@ -82,4 +96,30 @@ export function addNewLineup(lineupId){
 
 function getLineup(lineupId){
     return lineups.value.find(lineup => lineup.id === lineupId)
+}
+
+function continiousCopyToLocalStorage(){
+    lineups.subscribe(lineupsValue => {
+        console.log('SET', lineupsValue);
+        if(lineupsValue?.length) {
+            localStorage.setItem('Lineups', JSON.stringify(lineupsValue))
+        }
+    })
+    allPlayers.subscribe(players => {localStorage.setItem('AllPlayers', JSON.stringify(players))});
+    availablePlayers.subscribe(players => {localStorage.setItem('AvailablePlayers', JSON.stringify(players))})
+}
+
+function getLineupsFromLocalStorage(){
+    //Guardamos las alineaciones
+    const savedLineups = JSON.parse(localStorage.getItem('Lineups')) || [];
+    lineups.next(savedLineups);
+}
+
+function filterPlayersNotAvailable(players){
+    //Obtenemos los id de los jugadores de las alineaciones para quitarlos de disponibles
+    const savedLineups = JSON.parse(localStorage.getItem('Lineups')) || [];
+    const usedPlayers = savedLineups.map(lineup=> Object.values(lineup)).flat();
+    const filteredPlayers = players?.filter(player => !usedPlayers.includes(player.id))
+    // availablePlayers.next(filteredPlayers)
+    return filteredPlayers;
 }

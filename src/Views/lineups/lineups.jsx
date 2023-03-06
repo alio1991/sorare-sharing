@@ -1,6 +1,6 @@
 import './lineups.scss';
 import { playersByUser, users } from '../../../src/Services/store'
-import { filteredAvailablePlayers, deletePlayerFromAvailables } from '../../../src/Services/customLineups'
+import { filteredAvailablePlayers, rejectFromAvailables, lineups, addNewLineup } from '../../../src/Services/customLineups'
 import { UserTag } from '../../Components/UserTag/UserTag';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
 import { Lineup } from '../../Components/Lineup/Lineup';
@@ -10,10 +10,12 @@ function Lineups() {
 
     const [cardsByUser, setcardsByUser] = useState({})
     const [cardsFiltered, setcardsFiltered] = useState([])
+    const [localLineups, setlocalLineups] = useState([{id: 1}])
   
     useEffect(() => {
       filteredAvailablePlayers.subscribe((cards) => { setcardsFiltered(cards)})
       playersByUser.subscribe(cards => setcardsByUser(cards))
+      lineups.subscribe(lineups => {setlocalLineups(lineups)})
     }, [])
   
     const onUsetTagSelected = (user, active) => {
@@ -36,21 +38,12 @@ function Lineups() {
         </div>
   
         <div className="select-team-section">
+          <button onClick={()=> addNewLineup(localLineups.length+1)}>AddLineup</button>
           <div className="player-cards">
             {cardsFiltered.sort((a,b)=> b.player.averageScore-a.player.averageScore).map((card, i)=> <PlayerCard cardId={card.id} key={i}></PlayerCard>)}
           </div>
           <div className="lineups">
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
-            <Lineup></Lineup>
+            {localLineups.map((elem) => <Lineup id={elem.id} key={elem.id}></Lineup>)}
           </div>
         </div>
       </div>
@@ -62,8 +55,9 @@ function Lineups() {
   
     function handleDrop(event) {
         const cardId = event.dataTransfer.getData("text/html");
-        deletePlayerFromAvailables(cardId)
+        rejectFromAvailables(cardId)
     }
+
   }
   
   export default Lineups;

@@ -100,13 +100,13 @@ function getLineup(lineupId){
 
 function continiousCopyToLocalStorage(){
     lineups.subscribe(lineupsValue => {
-        console.log('SET', lineupsValue);
         if(lineupsValue?.length) {
             localStorage.setItem('Lineups', JSON.stringify(lineupsValue))
         }
     })
     allPlayers.subscribe(players => {localStorage.setItem('AllPlayers', JSON.stringify(players))});
     availablePlayers.subscribe(players => {localStorage.setItem('AvailablePlayers', JSON.stringify(players))})
+    rejectedPlayers.subscribe(players => {localStorage.setItem('RejectedPlayers', JSON.stringify(players))})
 }
 
 function getLineupsFromLocalStorage(){
@@ -116,9 +116,11 @@ function getLineupsFromLocalStorage(){
 }
 
 function filterPlayersNotAvailable(players){
-    //Obtenemos los id de los jugadores de las alineaciones para quitarlos de disponibles
+    //Obtenemos los id de los jugadores de las alineaciones y de los rechazados, para quitarlos de disponibles
+    const rejected = JSON.parse(localStorage.getItem('RejectedPlayers')) || [];
+    rejectedPlayers.next(rejected)
     const savedLineups = JSON.parse(localStorage.getItem('Lineups')) || [];
-    const usedPlayers = savedLineups.map(lineup=> Object.values(lineup)).flat();
+    const usedPlayers = [...savedLineups.map(lineup=> Object.values(lineup)).flat(), ...rejected.map(elem=> elem.id)];
     const filteredPlayers = players?.filter(player => !usedPlayers.includes(player.id))
     // availablePlayers.next(filteredPlayers)
     return filteredPlayers;

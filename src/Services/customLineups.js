@@ -41,13 +41,21 @@ function copyAllPlayersFromLocalStorage(){
 
 export function addPlayerToLineup(playerId, lineupId, lineupPosition){
     selectPlayerFromAvailables(playerId);
-    console.log( getLineup(lineupId), lineupId);
     const playerIdInSelectedPosition = getLineup(lineupId)[lineupPosition];
     if(playerIdInSelectedPosition){
         availablePlayers.next([...availablePlayers.value, getPlayer(playerIdInSelectedPosition)])
     }
     getLineup(lineupId)[lineupPosition] = playerId;
     calculateTotalScore(lineupId);
+}
+
+export function deleteCardFromLineup(position, cardId){
+    const newLineups = Object.assign([], lineups.value)
+    const playerId = newLineups.find(player=> player.id===cardId)[position.toLowerCase()]
+    newLineups.find(player=> player.id===cardId)[position.toLowerCase()] = null
+    lineups.next(newLineups)
+    const player = getPlayer(playerId);
+    availablePlayers.next([...availablePlayers.value, player])
 }
 
 function getPlayer(playerId){

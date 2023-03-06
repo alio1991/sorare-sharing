@@ -11,6 +11,21 @@
         height: 200px;
         background-color: grey;
         border-radius: 1rem;
+
+        .delete{
+            cursor: pointer;
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ec7878;
+            border: 1px solid black
+        }
     }
 
     .lineup-total-score{

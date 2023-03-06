@@ -29,11 +29,10 @@ export function Lineup({id}){
 
     return(
         <div className="lineup">
-            <h1>ID:{id}</h1>
             <div className="lineup-total-score">
                 <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff green' : 'score-diff red'}>{240-totalScore}</h3>
             </div>
-            <div className="slot extra" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
+            <div className="slot extra extra-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
                 <div onClick={()=> deleteCard('extra')} className="delete">X</div>
                 {extraId ? <PlayerCard cardId={extraId}></PlayerCard> : "Extra"}
             </div>

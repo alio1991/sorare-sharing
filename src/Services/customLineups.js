@@ -11,6 +11,7 @@ let copyAllPlayersFlag = true;
 
 const lineupBase = {
     id: null,
+    owner: null,
     extra: null,
     forward: null,
     defender: null,
@@ -49,6 +50,14 @@ export function addPlayerToLineup(playerId, lineupId, lineupPosition){
     calculateTotalScore(lineupId);
 }
 
+export function addLineupOwner(lineupId, owner){    
+    if(lineupId&&owner){
+        const lineupsCopy = Object.assign([], lineups.value)
+        lineupsCopy.find(lineup => lineup.id === lineupId).owner = owner
+        lineups.next(lineupsCopy)
+    }
+}
+
 export function deleteCardFromLineup(position, cardId){
     const newLineups = Object.assign([], lineups.value)
     const playerId = newLineups.find(player=> player.id===cardId)[position.toLowerCase()]
@@ -58,7 +67,7 @@ export function deleteCardFromLineup(position, cardId){
     availablePlayers.next([...availablePlayers.value, player])
 }
 
-function getPlayer(playerId){
+export function getPlayer(playerId){
     return allPlayers.value.find(player => player.id === playerId)
 }
 

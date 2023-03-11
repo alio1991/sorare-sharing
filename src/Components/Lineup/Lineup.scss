@@ -64,4 +64,43 @@
         top: 50px;
         right: 50px;
     }
+
+
+    .transactions{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background-color: rgb(142, 243, 142);
+        width: 35%;
+        height: 300px;
+
+        .transactions-list{
+            text-align: left;
+
+            .user-transaction{
+                display: flex;
+                justify-content: space-around;
+                color: blue;
+                margin-top: 0.5rem;
+                text-align: center;
+
+                .from{
+                    color: blue;
+                }
+                .to{
+                    color: green;
+                }
+            }
+            h3{
+                color: black;
+                font-weight: bold;
+            }
+            h1{
+                color: green;
+            }
+            li{
+                padding-left: 0.2rem;
+            }
+        }
+    }
 }

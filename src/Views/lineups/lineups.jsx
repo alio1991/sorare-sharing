@@ -11,6 +11,8 @@ function Lineups() {
     const [cardsByUser, setcardsByUser] = useState({})
     const [cardsFiltered, setcardsFiltered] = useState([])
     const [localLineups, setlocalLineups] = useState([{id: 1}])
+    const [lineupsOwners, setlineupsOwners] = useState({})
+
   
     useEffect(() => {
       filteredAvailablePlayers.subscribe((cards) => { setcardsFiltered(cards)})
@@ -43,7 +45,7 @@ function Lineups() {
             {cardsFiltered.sort((a,b)=> b.player.averageScore-a.player.averageScore).map((card, i)=> <PlayerCard cardId={card.id} key={i}></PlayerCard>)}
           </div>
           <div className="lineups">
-            {localLineups.map((elem) => <Lineup id={elem.id} key={elem.id}></Lineup>)}
+            {localLineups.map((elem) => <Lineup onLineupOwnersChange={onLineupOwnersChange} id={elem.id} key={elem.id}></Lineup>)}
           </div>
         </div>
       </div>
@@ -58,6 +60,18 @@ function Lineups() {
         rejectFromAvailables(cardId)
     }
 
+    function onLineupOwnersChange(lineupId, lineupOwner, playerOwners){
+      if(lineupsOwners[lineupId]){
+        const aux = Object.assign({}, lineupsOwners)
+        delete aux[lineupId];
+        aux[lineupId] = {owner: lineupOwner, playerOwners: playerOwners}
+        setlineupsOwners(aux)
+      }else{
+        const aux = Object.assign({}, lineupsOwners)
+        aux[lineupId] = {owner: lineupOwner, playerOwners: playerOwners}
+        setlineupsOwners(aux)
+      }
+    }
   }
   
   export default Lineups;

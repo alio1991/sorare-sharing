@@ -1,6 +1,6 @@
 import './WatchList.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { whatchListPlayers, getWhatchListPlayersWithMinPrices } from '../../Services/store'
+import { whatchListPlayers, getWatchListPlayersWithMinPrices } from '../../Services/store'
 import { getRandomCardFromPlayerSlug } from '../../Services/cards'
 import { useEffect, useState } from 'react';
 
@@ -15,7 +15,7 @@ function WatchList() {
 
     return (
         <div className="whatch-list-prices">
-            <button onClick={()=> getWhatchListPlayersWithMinPrices()}>Actualizar</button>
+            <button onClick={()=> getWatchListPlayersWithMinPrices()}>Actualizar</button>
             <div className="add-new-player">
                 <input onKeyUp={ev => setinputValue(ev.target.value)} type="text" />
                 <button onClick={() => addNewPayerToWatchList(inputValue)}>Añadir</button>

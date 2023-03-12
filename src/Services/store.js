@@ -49,7 +49,8 @@ export function getPlayersWithMinPrices(){
   }, 500000);
 }
 
-export function getWhatchListPlayersWithMinPrices(){
+export function getWatchListPlayersWithMinPrices(){
+  console.log('Actualizando')
   whatchListPlayers.value.forEach(card=> {
       getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
         const cardCopy = Object.assign({}, card);

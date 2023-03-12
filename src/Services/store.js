@@ -34,6 +34,7 @@ export function getPlayersWithMinPrices(){
         setTimeout(()=>{
       getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
         const cardCopy = Object.assign({}, card);
+        cardCopy.prevPrice = cardCopy.minPrice;
         cardCopy.minPrice = res.content;
         console.log('Nueva: ',index, cardCopy);
         const prevcards = playerCardsWithMinPrices.value;
@@ -52,6 +53,7 @@ export function getWhatchListPlayersWithMinPrices(){
   whatchListPlayers.value.forEach(card=> {
       getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
         const cardCopy = Object.assign({}, card);
+        cardCopy.prevPrice = cardCopy.minPrice;
         cardCopy.minPrice = res.content;
         const prevcards = whatchListPlayers.value;
         const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)

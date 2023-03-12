@@ -25,15 +25,16 @@ function WatchList() {
                 .sort((a,b)=> b?.minPrice?.eur-a?.minPrice?.eur)
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
+                        <div onClick={()=> deleteCard(card.player.slug)} className="delete">X</div>
                         <PlayerCard wholeCard={card} ></PlayerCard>
                         {card?.minPrice && <div className="price-section">
                             <div className={`price ${getColor(card.minPrice.eur)}`}>
                                 <h3>{formatPrice(card.minPrice.eur)}€</h3>
                             </div>
                             {/* <div className={`on-sale ${card.onSale ? 'green' : ''}`}></div> */}
-                            {/* <div className={`buy-price`}>
-                                <h3>{formatPrice(card.token.ownershipHistory.filter(elem => users.value.includes(elem.user.nickname))[0]?.priceFiat.eur)}€</h3>
-                            </div> */}
+                            <div className={formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)>=0 ? 'prev-price green' : 'prev-price red'}>
+                                <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}€</h3>
+                            </div>
                         </div>}
                     </div>
                 )}
@@ -42,12 +43,22 @@ function WatchList() {
     )
 
     function addNewPayerToWatchList(playerSlug){
-        getRandomCardFromPlayerSlug(playerSlug).then(res => {
-            const newCard = res.content.player.cards.nodes[0];
-            whatchListPlayers.value?.filter(player => player.player.id !== newCard.player.id)
-            whatchListPlayers.next([...whatchListPlayers.value, res.content.player.cards.nodes[0]])
-        })
+        if(whatchListPlayers.value.some(card => card.player.slug === playerSlug)){
+            console.log('El jugador '+playerSlug+' ya está en la lista');
+        }else{
+            getRandomCardFromPlayerSlug(playerSlug).then(res => {
+                const newCard = res.content.player.cards.nodes[0];
+                whatchListPlayers.value?.filter(player => player.player.id !== newCard.player.id)
+                whatchListPlayers.next([...whatchListPlayers.value, res.content.player.cards.nodes[0]])
+            })
+        }
     }
+
+    function deleteCard(playerSlug){
+        const newList = whatchListPlayers.value.filter(card => card.player.slug !== playerSlug)
+        whatchListPlayers.next(newList)
+
+    }  
 
     function formatPrice(price){
         if(price<25){

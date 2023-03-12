@@ -9,10 +9,6 @@ export function PlayerCard({cardId, wholeCard}){
         allPlayers.subscribe(players=> setCard(players.find(player => player.id===cardId)))
     },[cardId])
 
-    useEffect(()=>{
-        setCard(wholeCard)
-    },[wholeCard])
-
     if(card){
         return(
             <div 

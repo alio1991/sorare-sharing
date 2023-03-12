@@ -1,17 +1,42 @@
 import { BehaviorSubject } from "rxjs"
-import { getCardsByUser } from "./cards";
+import { getCardsByUser, getCardsOnSaleByPlayerSlug } from "./cards";
 
 
 export const users = new BehaviorSubject(["alioli1991", "alioaa", "aagudolopez", "pititos", "kso1991", "javicaso"]);
 export const allPlayers = new BehaviorSubject([]);
 export const playersByUser = new BehaviorSubject({});
 export const teams = new BehaviorSubject([]);
+export const playerCardsWithMinPrices = new BehaviorSubject([]);
 
 allPlayers.subscribe(players => {
   const teamsArray = players.map(player => player.player.lastClub.name)
   const uniqueteams = Array.from(new Set(teamsArray));
   teams.next(uniqueteams)
 })
+
+playerCardsWithMinPrices.next(JSON.parse(localStorage.getItem('AllCardsWithPrices')) || []);
+
+playerCardsWithMinPrices.subscribe(cards => {
+  localStorage.setItem('AllCardsWithPrices', JSON.stringify(cards))
+})
+
+export function getPlayersWithMinPrices(){
+  allPlayers.value.map((card, index)=> {
+    const mod = index%4;
+    const delay = mod===0 ? 0 : 150000*mod;
+        setTimeout(()=>{
+      getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+        const cardCopy = Object.assign({}, card);
+        cardCopy.minPrice = res.content;
+        console.log('Nueva: ',index, cardCopy);
+        const prevcards = playerCardsWithMinPrices.value;
+        const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+        playerCardsWithMinPrices.next([...filteredcards, cardCopy])
+      })
+    }, delay)
+  })
+}
+
 
 const getUsersInfo = () => {
   clearOldData()

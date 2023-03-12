@@ -1,0 +1,38 @@
+.card-prices{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3{
+        text-align: center;
+    }
+    .player-cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 95%;
+        flex: 3;
+        box-sizing: border-box;
+        overflow-y: scroll;
+
+        .card-with-price{
+            position: relative;
+            margin-bottom: 35px;
+
+            .price{
+                position: absolute;
+                bottom: -30px;
+                left: calc(50% - 42.5px);
+                width: 85px;
+                height: 54px;
+                border-radius: 50%;
+                z-index: -1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+  
+      }
+}

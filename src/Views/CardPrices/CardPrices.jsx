@@ -1,6 +1,6 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices } from '../../Services/store'
+import { playerCardsWithMinPrices, users } from '../../Services/store'
 import { useEffect, useState } from 'react';
 
 function CardPrices() {
@@ -19,16 +19,31 @@ function CardPrices() {
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
                         <PlayerCard cardId={card.id} ></PlayerCard>
-                        <div className={`price ${getColor(card.minPrice.eur)}`}><h3>{card.minPrice.eur.toFixed(2)}€</h3></div>
+                        <div className="price-section">
+                            <div className={`price ${getColor(card.minPrice.eur)}`}>
+                                <h3>{formatPrice(card.minPrice.eur)}€</h3>
+                            </div>
+                            <div className={`on-sale ${card.onSale ? 'green' : ''}`}></div>
+                            {/* <h3>{card.onSale ? 'EN VENTA' : ''}</h3> */}
+                            <div className={`buy-price`}>
+                                <h3>{formatPrice(card.token.ownershipHistory.filter(elem => users.value.includes(elem.user.nickname))[0]?.priceFiat.eur)}€</h3>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
         </div>
     )
 
+    function formatPrice(price){
+        if(price<25){
+            return price.toFixed(1);
+        }else{
+            return Math.round(price)
+        }
+    }
     function getColor(price){
         if(price > 100){
-            console.log(price);
             return 'green'
         }else if(price > 50){
             return 'light-green'

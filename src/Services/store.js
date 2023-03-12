@@ -35,6 +35,9 @@ export function getPlayersWithMinPrices(){
       })
     }, delay)
   })
+  setTimeout(() => {
+    console.log('CARGA TERMINADA!!!');
+  }, 450000);
 }
 
 

@@ -21,7 +21,7 @@ playerCardsWithMinPrices.subscribe(cards => {
 })
 
 export function getPlayersWithMinPrices(){
-  allPlayers.value.map((card, index)=> {
+  allPlayers.value.forEach((card, index)=> {
     const mod = index%4;
     const delay = mod===0 ? 0 : 150000*mod;
         setTimeout(()=>{
@@ -35,9 +35,10 @@ export function getPlayersWithMinPrices(){
       })
     }, delay)
   })
+
   setTimeout(() => {
     console.log('CARGA TERMINADA!!!');
-  }, 450000);
+  }, 500000);
 }
 
 

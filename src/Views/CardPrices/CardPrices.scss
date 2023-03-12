@@ -3,6 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-top: 1px solid black;
+
+    button{
+        background-color: lightgreen;
+        border-radius: 15px;
+        font-size: 1rem;
+    }
 
     h3{
         text-align: center;

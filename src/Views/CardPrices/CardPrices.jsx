@@ -1,6 +1,6 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices, users } from '../../Services/store'
+import { playerCardsWithMinPrices, users, getPlayersWithMinPrices } from '../../Services/store'
 import { useEffect, useState } from 'react';
 
 function CardPrices() {
@@ -13,6 +13,9 @@ function CardPrices() {
 
     return (
         <div className="card-prices">
+            <h2>Precio Total Actual: {formatPrice(cardsFiltered.reduce((acc, card)=> card.minPrice.eur+acc, 0))}€</h2>
+            <button onClick={()=> getPlayersWithMinPrices()}>GetPlayers</button>
+
             <div className="player-cards">
                 {cardsFiltered
                 .sort((a,b)=> b.minPrice.eur-a.minPrice.eur)

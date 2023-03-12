@@ -7,6 +7,7 @@ export const allPlayers = new BehaviorSubject([]);
 export const playersByUser = new BehaviorSubject({});
 export const teams = new BehaviorSubject([]);
 export const playerCardsWithMinPrices = new BehaviorSubject([]);
+export const whatchListPlayers = new BehaviorSubject([]);
 
 allPlayers.subscribe(players => {
   const teamsArray = players.map(player => player.player.lastClub.name)
@@ -18,6 +19,12 @@ playerCardsWithMinPrices.next(JSON.parse(localStorage.getItem('AllCardsWithPrice
 
 playerCardsWithMinPrices.subscribe(cards => {
   localStorage.setItem('AllCardsWithPrices', JSON.stringify(cards))
+})
+
+whatchListPlayers.next(JSON.parse(localStorage.getItem('WhatchListPlayers')) || []);
+
+whatchListPlayers.subscribe(cards => {
+  localStorage.setItem('WhatchListPlayers', JSON.stringify(cards))
 })
 
 export function getPlayersWithMinPrices(){
@@ -41,6 +48,17 @@ export function getPlayersWithMinPrices(){
   }, 500000);
 }
 
+export function getWhatchListPlayersWithMinPrices(){
+  whatchListPlayers.value.forEach(card=> {
+      getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+        const cardCopy = Object.assign({}, card);
+        cardCopy.minPrice = res.content;
+        const prevcards = whatchListPlayers.value;
+        const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+        whatchListPlayers.next([...filteredcards, cardCopy])
+      })
+  })
+}
 
 const getUsersInfo = () => {
   clearOldData()

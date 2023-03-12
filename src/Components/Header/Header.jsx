@@ -19,9 +19,10 @@ function Header() {
     return (
         <div className="header">
             <div className="menu">
-                {currentView!=="/" && <div className="menu-item" onClick={() => navigate('/')}>ALINEACIONES</div>}
-                {currentView!=="/rejected" && <div className="menu-item" onClick={() => navigate('/rejected')}>APARTADOS</div>}
-                {currentView!=="/card-prices" && <div className="menu-item" onClick={() => navigate('/card-prices')}>PRECIOS</div>}
+                <div className={currentView!=="/" ? 'menu-item' : 'menu-item selected'} onClick={() => navigate('/')}>ALINEACIONES</div>
+                <div className={currentView!=="/rejected" ? 'menu-item' : 'menu-item selected'} onClick={() => navigate('/rejected')}>APARTADOS</div>
+                <div className={currentView!=="/card-prices" ? 'menu-item' : 'menu-item selected'} onClick={() => navigate('/card-prices')}>PRECIOS</div>
+                <div className={currentView!=="/watch-list" ? 'menu-item' : 'menu-item selected'} onClick={() => navigate('/watch-list')}>LISTA DE SEGUIMIENTO</div>
             </div>
         </div>
     )

@@ -2,12 +2,16 @@ import './PlayerCard.scss';
 import { allPlayers } from '../../../src/Services/store'
 import { useEffect, useState } from 'react';
 
-export function PlayerCard({cardId}){
+export function PlayerCard({cardId, wholeCard}){
     const [card, setCard] = useState(null)
 
     useEffect(()=>{
         allPlayers.subscribe(players=> setCard(players.find(player => player.id===cardId)))
     },[cardId])
+
+    useEffect(()=>{
+        setCard(wholeCard)
+    },[wholeCard])
 
     if(card){
         return(
@@ -22,8 +26,21 @@ export function PlayerCard({cardId}){
                 <div className="owner">{card.owner}</div>
             </div>
         );
+    }else if(wholeCard){
+        return(
+            <div 
+                className={`player-card ${wholeCard.positionTyped.toLowerCase()}-border`}
+                draggable="true"
+                onDragStart={handleDragStart}
+            >
+                <h3>{`${wholeCard?.player.firstName} ${wholeCard?.player.lastName}`}</h3>
+                <img src={wholeCard?.player.pictureUrl} alt="" />
+                <div className={`score ${getScoreColor(wholeCard.player.averageScore)}`}>{wholeCard.player.averageScore}</div>
+                <div className="owner">{wholeCard.owner}</div>
+            </div>
+        );
     }else{
-        return ""
+        return "naaadaaa"
     }
 
     function handleDragStart(event) {

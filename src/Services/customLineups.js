@@ -62,9 +62,12 @@ export function deleteCardFromLineup(position, cardId){
     const newLineups = Object.assign([], lineups.value)
     const playerId = newLineups.find(player=> player.id===cardId)[position.toLowerCase()]
     newLineups.find(player=> player.id===cardId)[position.toLowerCase()] = null
+    const lineupId = newLineups.find(player=> player.id===cardId).id;
     lineups.next(newLineups)
     const player = getPlayer(playerId);
     availablePlayers.next([...availablePlayers.value, player])
+    calculateTotalScore(lineupId);
+
 }
 
 export function getPlayer(playerId){

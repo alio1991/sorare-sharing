@@ -31,10 +31,11 @@ export function getPlayersWithMinPrices(){
   allPlayers.value.forEach((card, index)=> {
     const mod = index%4;
     const delay = mod===0 ? 0 : 150000*mod;
-        setTimeout(()=>{
+    setTimeout(()=>{
       getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+        const prevPrice = playerCardsWithMinPrices.value.find(playerCard => playerCard.id === card.id)?.minPrice;
         const cardCopy = Object.assign({}, card);
-        cardCopy.prevPrice = cardCopy.minPrice;
+        cardCopy.prevPrice = prevPrice;
         cardCopy.minPrice = res.content;
         console.log('Nueva: ',index, cardCopy);
         const prevcards = playerCardsWithMinPrices.value;

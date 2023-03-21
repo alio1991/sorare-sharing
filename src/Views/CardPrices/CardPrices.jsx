@@ -28,8 +28,11 @@ function CardPrices() {
                             </div>
                             <div className={`on-sale ${card.onSale ? 'green' : ''}`}></div>
                             {/* <h3>{card.onSale ? 'EN VENTA' : ''}</h3> */}
-                            <div className={`buy-price`}>
+                            {/* <div className={`buy-price`}>
                                 <h3>{formatPrice(card.token.ownershipHistory.filter(elem => users.value.includes(elem.user.nickname))[0]?.priceFiat.eur)}€</h3>
+                            </div> */}
+                            <div className={formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)>=0 ? 'prev-price green' : 'prev-price red'}>
+                                <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}€</h3>
                             </div>
                         </div>
                     </div>

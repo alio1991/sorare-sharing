@@ -20,6 +20,7 @@ export function PlayerCard({cardId, wholeCard}){
                 <img src={card?.player.pictureUrl} alt="" />
                 <div className={`score ${getScoreColor(card.player.averageScore)}`}>{card.player.averageScore}</div>
                 <div className="owner">{card.owner}</div>
+                {card.player?.activeNationalTeam?.pictureUrl && <div className="country"> <img src={card.player?.activeNationalTeam?.pictureUrl} alt={card.player?.activeNationalTeam?.name} /></div>}
             </div>
         );
     }else if(wholeCard){

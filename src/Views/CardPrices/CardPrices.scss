@@ -66,6 +66,17 @@
                     align-items: center;
                     border: 1px solid black;
                 }
+
+                .prev-price{
+                    width: 60px;
+                    height: 38px;
+                    border-radius: 16px;
+                    z-index: -1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid black;
+                }
             }
         }
   

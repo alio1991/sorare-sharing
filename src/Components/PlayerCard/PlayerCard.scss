@@ -50,6 +50,23 @@
         background-color: rgb(12, 56, 177);
     }
 
+    .country{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        justify-content: flex-end;
+
+        img{
+            width: 45px;
+            height: 32px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    }
+
 }
 
 .goalkeeper-border{

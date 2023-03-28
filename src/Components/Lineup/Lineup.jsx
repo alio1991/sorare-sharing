@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlayerCard } from '../PlayerCard/PlayerCard';
 import './Lineup.scss';
-import {addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner, deleteLineup} from "../../Services/customLineups"
+import { addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner, deleteLineup } from "../../Services/customLineups"
 import { allPlayers, users } from '../../../src/Services/store'
 import { skipWhile } from 'rxjs';
 

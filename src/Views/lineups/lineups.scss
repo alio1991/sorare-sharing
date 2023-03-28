@@ -67,6 +67,34 @@
           width: 15rem;
           height: 50px;
         }
+
+        .global-transactions{
+          height: fit-content;
+          min-height: 2rem;
+          border: 1px solid black;
+          border-radius: 1rem;
+          width: 99%;
+          margin-bottom: 1rem;
+
+          .transaction{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;          
+            border-bottom: 1px solid black;;  
+            
+            .owner{
+              width: 50%;
+
+              .player{
+                margin: 0.5rem;
+                border: 1px solid black;
+                border-radius: 1rem;
+                background-color: yellow;
+              }
+            }
+          }
+        }
       }
     }
   

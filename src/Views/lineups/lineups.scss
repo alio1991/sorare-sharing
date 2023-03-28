@@ -1,4 +1,6 @@
 .lineups-view {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     --header-height: 120px;
     border-top: 1px solid black;
@@ -29,7 +31,8 @@
         }
       }
     }
-  
+
+
     .select-team-section{
       display: flex;
       height: calc(99vh - var(--header-height));
@@ -47,8 +50,21 @@
       }
   
       .lineups{
+        position: relative;
         flex: 2;
         overflow-y: scroll;
+
+        .new-lineup-button{
+          position: fixed;
+          z-index: 2;
+          right: 2rem;
+          top: 10rem;
+          cursor: pointer;
+          background-color: rgb(44, 219, 44);
+          border-radius: 1rem;
+          width: 15rem;
+          height: 50px;
+        }
       }
     }
   

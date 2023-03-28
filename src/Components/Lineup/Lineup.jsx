@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PlayerCard } from '../PlayerCard/PlayerCard';
 import './Lineup.scss';
-import {addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner} from "../../Services/customLineups"
+import {addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner, deleteLineup} from "../../Services/customLineups"
 import { allPlayers, users } from '../../../src/Services/store'
 import { skipWhile } from 'rxjs';
 
@@ -45,10 +45,10 @@ export function Lineup({id, onLineupOwnersChange}){
     }, [id])
 
 
-
-
     return(
         <div className="lineup">
+            <div onClick={()=> deleteLineup(id)} className="delete-lineup">X</div>
+
             <div className="lineup-total-score">
                 <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff-green' : 'score-diff-red'}>{240-totalScore}</h3>
             </div>

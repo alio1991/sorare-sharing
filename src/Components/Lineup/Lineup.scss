@@ -5,6 +5,20 @@
     height: 900px;
     margin: 1rem 0;
 
+    .delete-lineup{
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: #ec1616;
+        border: 1px solid black
+    }
+
     .slot{
         position: absolute;
         width: 150px;

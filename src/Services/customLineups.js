@@ -110,9 +110,9 @@ export function addNewLineup(lineupId){
     lineups.next([...lineups.value, newLineup])
 }
 
-// function deleteLineup(lineupId){
-//     lineups.next(lineups.value.filter(lineup => lineup.id!==lineupId))
-// }
+export function deleteLineup(lineupId){
+    lineups.next(lineups.value.filter(lineup => lineup.id!==lineupId))
+}
 
 function getLineup(lineupId){
     return lineups.value.find(lineup => lineup.id === lineupId)
@@ -120,7 +120,7 @@ function getLineup(lineupId){
 
 function continiousCopyToLocalStorage(){
     lineups.subscribe(lineupsValue => {
-        if(lineupsValue?.length) {
+        if(lineupsValue) {
             localStorage.setItem('Lineups', JSON.stringify(lineupsValue))
         }
     })

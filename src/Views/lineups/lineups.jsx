@@ -40,11 +40,11 @@ function Lineups() {
         </div>
   
         <div className="select-team-section">
-          <button onClick={()=> addNewLineup(localLineups.length+1)}>AddLineup</button>
           <div className="player-cards">
             {cardsFiltered.sort((a,b)=> b.player.averageScore-a.player.averageScore).map((card, i)=> <PlayerCard cardId={card.id} key={i}></PlayerCard>)}
           </div>
           <div className="lineups">
+            <button className="new-lineup-button" onClick={()=> addNewLineup(localLineups.length ? Math.max(...localLineups.map(elem => elem.id))+1 : 0)}>AddLineup</button>
             {localLineups.map((elem) => <Lineup onLineupOwnersChange={onLineupOwnersChange} id={elem.id} key={elem.id}></Lineup>)}
           </div>
         </div>

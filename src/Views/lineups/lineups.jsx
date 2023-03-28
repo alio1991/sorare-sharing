@@ -30,13 +30,11 @@ function Lineups() {
   
     return (
       <div className="lineups-view">
-        <div className="app-header">
-          <div className="app-subheader">
-            <div className="user-tags">
-              {Object.keys(cardsByUser).map((user, i)=> <UserTag onUsetTagSelected={onUsetTagSelected} name={user} cards={cardsByUser[user]} key={i}></UserTag>)}
-            </div>
-            <div className="rubbish" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>Apartar</div>
+        <div className="lineups-header">
+          <div className="user-tags">
+            {Object.keys(cardsByUser).map((user, i)=> <UserTag onUsetTagSelected={onUsetTagSelected} name={user} cards={cardsByUser[user]} key={i}></UserTag>)}
           </div>
+          <div className="rubbish" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>Apartar</div>
         </div>
   
         <div className="select-team-section">
@@ -44,7 +42,7 @@ function Lineups() {
             {cardsFiltered.sort((a,b)=> b.player.averageScore-a.player.averageScore).map((card, i)=> <PlayerCard cardId={card.id} key={i}></PlayerCard>)}
           </div>
           <div className="lineups">
-            <button className="new-lineup-button" onClick={()=> addNewLineup(localLineups.length ? Math.max(...localLineups.map(elem => elem.id))+1 : 0)}>AddLineup</button>
+            <button className="new-lineup-button" onClick={()=> addNewLineup(localLineups.length ? Math.max(...localLineups.map(elem => elem.id))+1 : 1)}>AddLineup</button>
             {localLineups.map((elem) => <Lineup onLineupOwnersChange={onLineupOwnersChange} id={elem.id} key={elem.id}></Lineup>)}
           </div>
         </div>

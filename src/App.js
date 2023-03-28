@@ -13,7 +13,6 @@ function App() {
   inicializeStore();
   return (
     <div className="App">
-      <h1>SORARE SHARING</h1>
       <Router>
         <Header></Header>
         <Routes>

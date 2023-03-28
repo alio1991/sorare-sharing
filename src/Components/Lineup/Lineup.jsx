@@ -140,7 +140,7 @@ export function Lineup({id, onLineupOwnersChange}){
         const cardId = event.dataTransfer.getData("text/html");
         const playerPosition = allPlayers.value.find(player => player.id===cardId).positionTyped;
         if((position==='extra' && playerPosition!=='Goalkeeper')|| playerPosition.toLowerCase() === position){
-            addPlayerToLineup(cardId, lineupId, position, setSlot)
+            addPlayerToLineup(cardId, id, position, setSlot)
         }
         generateOwners(lineupOwner)
     }

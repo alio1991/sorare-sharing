@@ -78,15 +78,12 @@ function Lineups() {
     }
 
     function onLineupOwnersChange(lineupId, lineupOwner, playerOwners){
-      if(lineupsOwners[lineupId]){
-        const aux = Object.assign({}, lineupsOwners)
-        delete aux[lineupId];
-        aux[lineupId] = {owner: lineupOwner, playerOwners: playerOwners}
-        setlineupsOwners(aux)
-      }else{
-        const aux = Object.assign({}, lineupsOwners)
-        aux[lineupId] = {owner: lineupOwner, playerOwners: playerOwners}
-        setlineupsOwners(aux)
+      if(playerOwners?.length){
+        setlineupsOwners(prevValue=> {
+          const aux = Object.assign({}, prevValue)
+          aux[lineupId] = {owner: lineupOwner, playerOwners: playerOwners}
+          return aux
+        })
       }
     }
 
@@ -115,8 +112,6 @@ function Lineups() {
             }
           }
         }
-
-        // console.log('tupletransactions', tupletransactions)
       }
       return tupletransactions;
     }

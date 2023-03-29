@@ -18,11 +18,6 @@ export function Lineup({id, onLineupOwnersChange}){
     const [defenderId, setdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
-    
-    useEffect(()=> {
-        if(lineupId && lineupOwner && playerOwners)
-        onLineupOwnersChange(lineupId, lineupOwner, playerOwners)
-    },[lineupId, lineupOwner, playerOwners])
 
     useEffect(()=> {
             addLineupOwner(lineupId, lineupOwner)
@@ -35,8 +30,8 @@ export function Lineup({id, onLineupOwnersChange}){
 
     useEffect(() => {
         if(id){
+            setlineupId(id)
             if (lineupId===null) {
-                setlineupId(id)
                 lineups.subscribe(lineupsValue => {
                     setNewLineupData(lineupsValue, id);
                 })
@@ -82,8 +77,7 @@ export function Lineup({id, onLineupOwnersChange}){
                 </select>
 
                 <div className="transactions-list">
-                    {transactionsRender().length ? transactionsRender() : <h1>CORRECTO!!</h1>
-                    }
+                    {transactionsRender().length ? transactionsRender() : <h1> OK!</h1>}
                 </div>
             </div>
         </div>
@@ -91,7 +85,7 @@ export function Lineup({id, onLineupOwnersChange}){
 
     function transactionsRender(){
         return [...new Set(playerOwners.filter(
-            duo => duo[0]!==lineupOwner
+            duo => { return duo[0]!== lineupOwner ?? 'alioli1991'}
         ).map(
             elem => elem[0]
         ))].map(owner => {
@@ -109,12 +103,12 @@ export function Lineup({id, onLineupOwnersChange}){
 
     function generateOwners(owner){
         if(owner){
-            allPlayers.pipe(skipWhile(list => list === [])).subscribe(playersList => {
+            allPlayers.pipe(skipWhile(list => list === [])).subscribe(soloEsParaAsegurarseQueYaEstanCargadosLosDatosDeLosJugadores => {
                 const playerIds = [extraId, forwardId, midfielderId, defenderId, goalkeeperId];
                 const owners = playerIds.map(playerId => {
                     const player = getPlayer(playerId);
     
-                    if(player){
+                    if(player && player.owner !== lineupOwner){
                         const playerName = player.player.firstName+' '+player.player.lastName;
                         const playerOwner = player.owner;
                         return [playerOwner, playerName]
@@ -123,6 +117,7 @@ export function Lineup({id, onLineupOwnersChange}){
                     }
                 }).filter(elem=> elem!==null)
                 setplayerOwners(owners)
+                onLineupOwnersChange(lineupId, lineupOwner, owners)
             })
         }
     }
@@ -166,6 +161,7 @@ export function Lineup({id, onLineupOwnersChange}){
 
     function deleteCard(position, cardId){
         if(cardId){
+            generateOwners(lineupOwner)
             deleteCardFromLineup(position, id)
         }
     }  

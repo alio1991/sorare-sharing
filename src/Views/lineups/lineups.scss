@@ -81,7 +81,9 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;          
-            border-bottom: 1px solid black;;  
+            &:not(:last-child){
+              border-bottom: 1px solid black; 
+            }
             
             .owner{
               width: 50%;

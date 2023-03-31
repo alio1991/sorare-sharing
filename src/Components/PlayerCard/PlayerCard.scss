@@ -6,18 +6,19 @@
     height: 200px;
     border-radius: 1rem;
     margin: 0.5rem;
-    padding: 0.5rem;
+    padding: 0 0.5rem 0.5rem;
     position: relative;
     width: 150px;
     height: 200px;
     overflow-y: hidden;
     background-color: #f3e415;
 
-    img{
+    .player-img{
         max-width: 145px;
         height: 150px;
         object-fit: cover;
         align-self: center;
+        margin-right: 1.5rem;
     }
 
     .score{
@@ -48,6 +49,33 @@
         border: 1px solid black;
         border-radius: 1rem;
         background-color: rgb(12, 56, 177);
+    }
+
+    .game{
+        position: absolute;
+        right: 0;
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        justify-content: flex-end;
+
+        img{
+            width: 45px;
+            height: 45px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    }
+
+    .next-game{
+        top: 3.5rem;
+    }
+    .two-next-game{
+        top: 6.5rem;
+        img{
+            width: 32px;
+            height: 32px;
+        }
     }
 
     .country{

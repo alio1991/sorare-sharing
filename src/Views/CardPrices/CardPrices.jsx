@@ -1,23 +1,30 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices, users, getPlayersWithMinPrices } from '../../Services/store'
+import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers } from '../../Services/store'
 import { useEffect, useState } from 'react';
 
 function CardPrices() {
 
-    const [cardsFiltered, setcardsFiltered] = useState([])
+    const [minPriceCards, setminPriceCards] = useState([])
+    const [allCards, setallCards] = useState([])
+
+    const [filteredCards, setfilteredCards] = useState([])
 
     useEffect(() => {
-        playerCardsWithMinPrices.subscribe((cards) => { setcardsFiltered(cards)})
+        allPlayers.subscribe(players => setallCards(players))
+        playerCardsWithMinPrices.subscribe((cards) => setminPriceCards(cards))
     }, [])
+    useEffect(() => {
+        filterOldPlayers(allCards, minPriceCards)
+    }, [minPriceCards, allCards])
 
     return (
         <div className="card-prices">
-            <h2>Precio Total Actual: {formatPrice(cardsFiltered.reduce((acc, card)=> card.minPrice.eur+acc, 0))}€</h2>
+            <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card.minPrice.eur+acc, 0))}€</h2>
             <button onClick={()=> getPlayersWithMinPrices()}>GetPlayers</button>
 
             <div className="player-cards">
-                {cardsFiltered
+                {filteredCards
                 .sort((a,b)=> b.minPrice.eur-a.minPrice.eur)
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
@@ -27,10 +34,6 @@ function CardPrices() {
                                 <h3>{formatPrice(card.minPrice.eur)}€</h3>
                             </div>
                             <div className={`on-sale ${card.onSale ? 'green' : ''}`}></div>
-                            {/* <h3>{card.onSale ? 'EN VENTA' : ''}</h3> */}
-                            {/* <div className={`buy-price`}>
-                                <h3>{formatPrice(card.token.ownershipHistory.filter(elem => users.value.includes(elem.user.nickname))[0]?.priceFiat.eur)}€</h3>
-                            </div> */}
                             <div className={formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)>=0 ? 'prev-price green' : 'prev-price red'}>
                                 <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}€</h3>
                             </div>
@@ -40,6 +43,15 @@ function CardPrices() {
             </div>
         </div>
     )
+
+
+    function filterOldPlayers(allCards, minPriceCards){
+        if(allCards?.length && minPriceCards?.length){
+            return setfilteredCards(minPriceCards.filter(card => allCards.some(player => card.id===player.id)))
+        }else{
+            return minPriceCards || [];
+        }
+    }
 
     function formatPrice(price){
         if(price<25){

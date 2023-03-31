@@ -20,3 +20,8 @@ export const getCardsOnSaleByPlayerSlug = (slug)=>{
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
   return fetch(url).then((res) => res.json());
 }
+
+export const getNextGameWeek = ()=>{
+  const url = new URL("http://localhost:8080/getNextGameWeek");
+  return fetch(url).then((res) => res.json());
+}

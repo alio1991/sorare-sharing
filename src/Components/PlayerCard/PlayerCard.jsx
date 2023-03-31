@@ -1,9 +1,19 @@
 import './PlayerCard.scss';
-import { allPlayers } from '../../../src/Services/store'
+import { allPlayers, nextGameWeek } from '../../../src/Services/store'
 import { useEffect, useState } from 'react';
 
 export function PlayerCard({cardId, wholeCard}){
     const [card, setCard] = useState(null)
+    const [gameWeek, setgameWeek] = useState(0)
+    const [upcomingGames, setupcomingGames] = useState([])
+
+    useEffect(()=>{
+        nextGameWeek.subscribe(gameWeek=> setgameWeek(gameWeek))
+    },[])
+
+    useEffect(()=>{
+        setupcomingGames(card?.player?.activeClub?.upcomingGames)
+    },[card])
 
     useEffect(()=>{
         allPlayers.subscribe(players=> setCard(players.find(player => player.id===cardId)))
@@ -20,8 +30,18 @@ export function PlayerCard({cardId, wholeCard}){
                 <img className="player-img" src={card?.player.pictureUrl} alt="" />
                 <div className={`score ${getScoreColor(card.player.averageScore)}`}>{card.player.averageScore}</div>
                 <div className="owner">{card.owner}</div>
-                {card.player?.activeClub?.upcomingGames[0] && <div className="next-game game"> <img src={getOppositeTeamImage(card.player?.activeClub, 0)} alt={card.player?.activeNationalTeam?.name} /></div>}
-                {card.player?.activeClub?.upcomingGames[1] && <div className="two-next-game game"> <img src={getOppositeTeamImage(card.player?.activeClub, 1)} alt={card.player?.activeNationalTeam?.name} /></div>}
+                {
+                    ['next-game', 'second-next-game', 'third-next-game'].map((slot, i) => {
+                        return <div key={i} className={`game ${slot}`}> 
+                                    {someTeamInThisSlot(i) ? 
+                                        <img src={getOppositeTeamImage(card.player.activeClub.name, i)} alt="club" />
+                                        :
+                                        <div className="no-game"><p>{gameWeek+i}</p></div>
+                                    }
+                                </div>
+                    })
+                }
+
                 {card.player?.activeNationalTeam?.pictureUrl && <div className="country"> <img src={card.player?.activeNationalTeam?.pictureUrl} alt={card.player?.activeNationalTeam?.name} /></div>}
             </div>
         );
@@ -42,10 +62,13 @@ export function PlayerCard({cardId, wholeCard}){
         return "x"
     }
 
-    function getOppositeTeamImage(club, matchIndex){
-        const clubName = club.name;
-        const match = club.upcomingGames[matchIndex];
+    function someTeamInThisSlot(slot){
+        return upcomingGames?.map(event => event.so5Fixture.gameWeek).includes(gameWeek+slot) ? upcomingGames.find(event => event.so5Fixture.gameWeek===gameWeek+slot) : null;
+    }
 
+    function getOppositeTeamImage(clubName, i){
+        const referencedGameWeek = gameWeek+i;
+        const match = upcomingGames.find(game => game.so5Fixture.gameWeek === referencedGameWeek);
         return match.awayTeam.name === clubName ? match.homeTeam.pictureUrl : match.awayTeam.pictureUrl;
     }
 

@@ -1,13 +1,18 @@
 import { BehaviorSubject } from "rxjs"
-import { getCardsByUser, getCardsOnSaleByPlayerSlug } from "./cards";
+import { getCardsByUser, getCardsOnSaleByPlayerSlug, getNextGameWeek } from "./cards";
 
 
 export const users = new BehaviorSubject(["alioli1991", "alioaa", "aagudolopez", "pititos", "kso1991", "javicaso"]);
 export const allPlayers = new BehaviorSubject([]);
+export const nextGameWeek = new BehaviorSubject(null);
 export const playersByUser = new BehaviorSubject({});
 export const teams = new BehaviorSubject([]);
 export const playerCardsWithMinPrices = new BehaviorSubject([]);
 export const whatchListPlayers = new BehaviorSubject([]);
+
+getNextGameWeek().then(res => { 
+  nextGameWeek.next(res.content.gameWeek)
+})
 
 allPlayers.subscribe(players => {
   const teamsArray = players.map(player => player.player.lastClub.name)

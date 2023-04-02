@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export function PlayerCard({cardId, wholeCard}){
     const [card, setCard] = useState(null)
-    const [gameWeek, setgameWeek] = useState(0)
+    const [gameWeek, setgameWeek] = useState(null)
     const [upcomingGames, setupcomingGames] = useState([])
 
     useEffect(()=>{
@@ -34,7 +34,7 @@ export function PlayerCard({cardId, wholeCard}){
                     ['next-game', 'second-next-game', 'third-next-game'].map((slot, i) => {
                         return <div key={i} className={`game ${slot}`}> 
                                     {someTeamInThisSlot(i) ? 
-                                        <img src={getOppositeTeamImage(card.player.activeClub.name, i)} alt="club" />
+                                        <img src={getOppositeTeamImage(card?.player?.activeClub?.name, i)} alt="club" />
                                         :
                                         <div className="no-game"><p>{gameWeek+i}</p></div>
                                     }
@@ -63,13 +63,13 @@ export function PlayerCard({cardId, wholeCard}){
     }
 
     function someTeamInThisSlot(slot){
-        return upcomingGames?.map(event => event.so5Fixture.gameWeek).includes(gameWeek+slot) ? upcomingGames.find(event => event.so5Fixture.gameWeek===gameWeek+slot) : null;
+        return gameWeek&&upcomingGames?.map(event => event?.so5Fixture?.gameWeek).includes(gameWeek+slot) ? upcomingGames.find(event => event?.so5Fixture?.gameWeek===gameWeek+slot) : null;
     }
 
     function getOppositeTeamImage(clubName, i){
         const referencedGameWeek = gameWeek+i;
-        const match = upcomingGames.find(game => game.so5Fixture.gameWeek === referencedGameWeek);
-        return match.awayTeam.name === clubName ? match.homeTeam.pictureUrl : match.awayTeam.pictureUrl;
+        const match = upcomingGames.find(game => game?.so5Fixture?.gameWeek === referencedGameWeek);
+        return match.awayTeam.name === clubName ? match?.homeTeam?.pictureUrl : match?.awayTeam?.pictureUrl;
     }
 
     function handleDragStart(event) {

@@ -3,6 +3,7 @@ import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
 import { whatchListPlayers, getWatchListPlayersWithMinPrices } from '../../Services/store'
 import { getRandomCardFromPlayerSlug } from '../../Services/cards'
 import { useEffect, useState } from 'react';
+import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
 
 function WatchList() {
 
@@ -28,19 +29,14 @@ function WatchList() {
                         <div onClick={()=> deleteCard(card.player.slug)} className="delete">X</div>
                         <PlayerCard wholeCard={card} ></PlayerCard>
                         {card?.minPrice && <div className="price-section">
-                            <div className={`price ${getColor(card.minPrice.eur)}`}>
-                                <h3>{formatPrice(card.minPrice.eur)}€</h3>
-                            </div>
-                            {/* <div className={`on-sale ${card.onSale ? 'green' : ''}`}></div> */}
-                            <div className={formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)>=0 ? 'prev-price green' : 'prev-price red'}>
-                                <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}€</h3>
-                            </div>
+                            <PriceBlock card={card}></PriceBlock>
                         </div>}
                     </div>
                 )}
             </div>
         </div>
     )
+
 
     function addNewPayerToWatchList(playerSlug){
         if(whatchListPlayers.value.some(card => card.player.slug === playerSlug)){
@@ -60,26 +56,7 @@ function WatchList() {
 
     }  
 
-    function formatPrice(price){
-        if(price<25){
-            return price.toFixed(1);
-        }else{
-            return Math.round(price)
-        }
-    }
-    function getColor(price){
-        if(price > 100){
-            return 'green'
-        }else if(price > 50){
-            return 'light-green'
-        }else if(price > 30){
-            return 'yellow'
-        }else if(price > 10){
-            return 'orange'
-        }else{
-            return 'red'
-        }
-    }
+
 }
 
 export default WatchList;

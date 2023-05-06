@@ -50,41 +50,7 @@
             }
 
             .price-section{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 180px;
-                margin: auto;
-                .price{
-                    // position: absolute;
-                    // bottom: -26px;
-                    // left: calc(50% - 30px);
-                    width: 60px;
-                    height: 38px;
-                    border-radius: 16px;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid black;
-                }
 
-                .on-sale{
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                }
-    
-                .prev-price{
-                    width: 60px;
-                    height: 38px;
-                    border-radius: 16px;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid black;
-                }
             }
         }
   

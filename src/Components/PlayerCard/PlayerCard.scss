@@ -33,6 +33,11 @@
         border: 1px solid black;
         font-weight: bold;
         padding: 0.1rem;
+
+        img{
+            width: 49px;
+            height: auto;
+        }
     }
 
     .owner{
@@ -94,12 +99,20 @@
         top: calc(3rem + 51px);
         width: 40px;
         height: 40px;
+        img{
+            width: 39px;
+            height: auto;
+        }
     }
 
     .third-next-game{
         top: calc(3rem + 51px + 41px);
         width: 30px;
         height: 30px;
+        img{
+            width: 29px;
+            height: auto;
+        }
     }
 
     .country{

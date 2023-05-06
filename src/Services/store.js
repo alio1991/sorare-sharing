@@ -35,7 +35,7 @@ whatchListPlayers.subscribe(cards => {
 export function getPlayersWithMinPrices(){
   allPlayers.value.forEach((card, index)=> {
     const mod = index%5;
-    const delay = mod===0 ? 0 : 150000*mod;
+    const delay = mod===0 ? 0 : 120000*mod;
     setTimeout(()=>{
       getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
         const prevPrice = playerCardsWithMinPrices.value.find(playerCard => playerCard.id === card.id)?.minPrice;
@@ -53,7 +53,7 @@ export function getPlayersWithMinPrices(){
 
   setTimeout(() => {
     console.log('CARGA TERMINADA!!!');
-  }, 500000);
+  }, 650000);
 }
 
 export function getWatchListPlayersWithMinPrices(){

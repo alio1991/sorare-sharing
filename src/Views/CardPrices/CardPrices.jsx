@@ -22,7 +22,7 @@ function CardPrices() {
     return (
         <div className="card-prices">
             <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card.minPrice.eur+acc, 0))}€</h2>
-            <button onClick={()=> getPlayersWithMinPrices()}>GetPlayers</button>
+            <button onClick={()=> getPlayersWithMinPrices()}>Get Players</button>
 
             <div className="player-cards">
                 {filteredCards

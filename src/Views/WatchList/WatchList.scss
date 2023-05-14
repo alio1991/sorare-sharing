@@ -10,10 +10,22 @@
         background-color: lightgreen;
         border-radius: 15px;
         font-size: 1rem;
+        margin: 1rem;
+        display: flex;
+        font-size: 1.5rem;
+        justify-content: center;
+        align-items: center;
     }
 
     .add-new-player{
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        input{
+            width: 20rem;
+            height: 2rem;
+        }
     }
 
     h3{

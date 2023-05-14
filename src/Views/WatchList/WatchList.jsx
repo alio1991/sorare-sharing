@@ -1,22 +1,26 @@
 import './WatchList.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { whatchListPlayers, getWatchListPlayersWithMinPrices } from '../../Services/store'
+import { whatchListPlayers, getWatchListPlayersWithMinPrices, whatchListPlayersLoadingFlag } from '../../Services/store'
 import { getRandomCardFromPlayerSlug } from '../../Services/cards'
 import { useEffect, useState } from 'react';
 import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
+import { Button } from 'antd';
 
 function WatchList() {
 
     const [cardsFiltered, setcardsFiltered] = useState([])
     const [inputValue, setinputValue] = useState([])
+    const [isUpdatePriceButtonLoading, setisUpdatePriceButtonLoading] = useState(false)
 
     useEffect(() => {
         whatchListPlayers.subscribe((cards) => { setcardsFiltered(cards)})
+        whatchListPlayersLoadingFlag.subscribe((bool) => setisUpdatePriceButtonLoading(bool))
     }, [])
 
     return (
         <div className="whatch-list-prices">
-            <button onClick={()=> getWatchListPlayersWithMinPrices()}>Actualizar</button>
+            <Button type="primary" loading={isUpdatePriceButtonLoading} onClick={() => getWatchListPlayersWithMinPrices()}> Actualizar Precios </Button>
+            {/* <button onClick={()=> getWatchListPlayersWithMinPrices()}>Actualizar</button> */}
             <div className="add-new-player">
                 <input onKeyUp={ev => setinputValue(ev.target.value)} type="text" />
                 <button onClick={() => addNewPayerToWatchList(inputValue)}>Añadir</button>

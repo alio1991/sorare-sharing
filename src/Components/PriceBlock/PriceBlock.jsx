@@ -36,11 +36,11 @@ export function PriceBlock({card}){
     function getColor(price){
         if(price > 100){
             return 'green'
-        }else if(price > 50){
+        }else if(price > 29){
             return 'light-green'
-        }else if(price > 30){
+        }else if(price > 5){
             return 'yellow'
-        }else if(price > 10){
+        }else if(price > 1){
             return 'orange'
         }else{
             return 'red'

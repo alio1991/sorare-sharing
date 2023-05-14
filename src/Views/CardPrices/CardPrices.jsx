@@ -1,8 +1,9 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers } from '../../Services/store'
+import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers, playersPricesLoadingFlag } from '../../Services/store'
 import { useEffect, useState } from 'react';
 import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
+import { Button } from 'antd';
 
 function CardPrices() {
 
@@ -11,9 +12,12 @@ function CardPrices() {
 
     const [filteredCards, setfilteredCards] = useState([])
 
+    const [isUpdatePriceButtonLoading, setisUpdatePriceButtonLoading] = useState(false)
+
     useEffect(() => {
         allPlayers.subscribe(players => setallCards(players))
         playerCardsWithMinPrices.subscribe((cards) => setminPriceCards(cards))
+        playersPricesLoadingFlag.subscribe((bool) => setisUpdatePriceButtonLoading(bool))
     }, [])
     useEffect(() => {
         filterOldPlayers(allCards, minPriceCards)
@@ -21,12 +25,12 @@ function CardPrices() {
 
     return (
         <div className="card-prices">
-            <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card.minPrice.eur+acc, 0))}€</h2>
-            <button onClick={()=> getPlayersWithMinPrices()}>Get Players</button>
+            <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card?.minPrice?.eur+acc, 0))}€</h2>
+            <Button type="primary" loading={isUpdatePriceButtonLoading} onClick={() => getPlayersWithMinPrices()}> Actualizar Precios </Button>
 
             <div className="player-cards">
                 {filteredCards
-                .sort((a,b)=> b.minPrice.eur-a.minPrice.eur)
+                .sort((a,b)=> b.minPrice?.eur-a.minPrice?.eur)
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
                         <PlayerCard cardId={card.id} ></PlayerCard>

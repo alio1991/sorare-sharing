@@ -67,6 +67,7 @@ export function getWatchListPlayersWithMinPrices(){
   const promises = [];
   whatchListPlayers.value.forEach(card=> {
       const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+        console.log('Promise', promise);
         const cardCopy = Object.assign({}, card);
         cardCopy.prevPrice = cardCopy.minPrice;
         cardCopy.priceChangeDate = new Date().getTime();;
@@ -78,11 +79,9 @@ export function getWatchListPlayersWithMinPrices(){
       promises.push(promise);
   })
   
-  Promise.all(promises)
-  .then(() => {
+  Promise.all(promises).then(() => {
     whatchListPlayersLoadingFlag.next(false)
-  })
-  .catch(error => {
+  }).catch(error => {
     console.log('Error', error);
     whatchListPlayersLoadingFlag.next(false)
   });

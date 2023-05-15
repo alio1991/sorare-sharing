@@ -32,56 +32,6 @@
         .card-with-price{
             position: relative;
             margin-bottom: 35px;
-
-            .price-section{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 180px;
-                margin: auto;
-                .price{
-                    width: 60px;
-                    height: 38px;
-                    border-radius: 16px;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid black;
-                }
-
-                .on-sale{
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 50%;
-                }
-    
-                .buy-price{
-                    width: 60px;
-                    height: 38px;
-                    border-radius: 16px;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid black;
-                }
-
-                .prev-price{
-                    width: 60px;
-                    height: 38px;
-                    border-radius: 16px;
-                    z-index: -1;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    border: 1px solid black;
-                }
-
-                .is-recent{
-                    border: 5px solid blue;
-                }
-            }
         }
   
       }

@@ -19,6 +19,7 @@ function CardPrices() {
         playerCardsWithMinPrices.subscribe((cards) => setminPriceCards(cards))
         playersPricesLoadingFlag.subscribe((bool) => setisUpdatePriceButtonLoading(bool))
     }, [])
+    
     useEffect(() => {
         filterOldPlayers(allCards, minPriceCards)
     }, [minPriceCards, allCards])

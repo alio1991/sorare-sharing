@@ -20,7 +20,6 @@ function WatchList() {
     return (
         <div className="whatch-list-prices">
             <Button type="primary" loading={isUpdatePriceButtonLoading} onClick={() => getWatchListPlayersWithMinPrices()}> Actualizar Precios </Button>
-            {/* <button onClick={()=> getWatchListPlayersWithMinPrices()}>Actualizar</button> */}
             <div className="add-new-player">
                 <input onKeyUp={ev => setinputValue(ev.target.value)} type="text" />
                 <button onClick={() => addNewPayerToWatchList(inputValue)}>Añadir</button>

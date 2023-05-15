@@ -67,7 +67,6 @@ export function getWatchListPlayersWithMinPrices(){
   const promises = [];
   whatchListPlayers.value.forEach(card=> {
       const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
-        console.log('Promise', promise);
         const cardCopy = Object.assign({}, card);
         cardCopy.prevPrice = cardCopy.minPrice;
         cardCopy.priceChangeDate = new Date().getTime();;

@@ -25,6 +25,7 @@ export function PlayerCard({cardId, wholeCard}){
                 className={`player-card ${card.positionTyped.toLowerCase()}-border`}
                 draggable="true"
                 onDragStart={handleDragStart}
+                onClick={()=> redirectsToSorareCard(card)}
             >
                 <h3>{`${card?.player.firstName} ${card?.player.lastName}`}</h3>
                 <img className="player-img" src={card?.player.pictureUrl} alt="" />
@@ -62,6 +63,12 @@ export function PlayerCard({cardId, wholeCard}){
         return "x"
     }
 
+    function redirectsToSorareCard(card){
+        const url = 'https://sorare.com/football/cards/'+card?.slug;
+        window.open(url, "_blank");
+    }
+
+    
     function someTeamInThisSlot(slot){
         return gameWeek&&upcomingGames?.map(event => event?.so5Fixture?.gameWeek).includes(gameWeek+slot) ? upcomingGames.find(event => event?.so5Fixture?.gameWeek===gameWeek+slot) : null;
     }

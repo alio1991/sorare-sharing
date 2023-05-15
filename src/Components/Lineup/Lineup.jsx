@@ -42,7 +42,7 @@ export function Lineup({id, onLineupOwnersChange}){
 
     return(
         <div className="lineup">
-            <div onClick={()=> deleteLineup(id)} className="delete-lineup">X</div>
+            <div onClick={()=> preDeleteLineup(id)} className="delete-lineup">X</div>
 
             <div className="lineup-total-score">
                 <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff-green' : 'score-diff-red'}>{240-totalScore}</h3>
@@ -164,5 +164,26 @@ export function Lineup({id, onLineupOwnersChange}){
             generateOwners(lineupOwner)
             deleteCardFromLineup(position, id)
         }
+    }  
+    function preDeleteLineup(lineupId){
+        restorePlayers()
+        deleteLineup(lineupId)
+    }  
+    function restorePlayers(){
+        const positionPlayers = [
+            [extraId, "extra"],
+            [forwardId, "forward"],
+            [midfielderId, "midfielder"],
+            [defenderId, "defender"],
+            [goalkeeperId, "goalkeeper"]
+        ]
+        positionPlayers.map(position => {
+            const cardId = position[0]
+            const positionName = position[1]
+            if(cardId){
+                generateOwners(lineupOwner)
+                deleteCardFromLineup(positionName, id)
+            }
+        })
     }  
 }

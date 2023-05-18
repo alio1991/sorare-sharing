@@ -45,7 +45,7 @@
         flex-wrap: wrap;
         justify-content: space-around;
         width: 95%;
-        flex: 3;
+        flex: 1;
         box-sizing: border-box;
         overflow-y: scroll;
   
@@ -55,13 +55,16 @@
         position: relative;
         flex: 2;
         overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
 
         .new-lineup-button{
+          cursor: pointer;
           position: fixed;
           z-index: 2;
           right: 2rem;
           top: calc(var(--header-height) * 0.25);
-          cursor: pointer;
           background-color: rgb(44, 219, 44);
           border-radius: 1rem;
           width: 15rem;
@@ -80,7 +83,8 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            align-items: flex-start;          
+            align-items: flex-start;
+
             &:not(:last-child){
               border-bottom: 1px solid black; 
             }

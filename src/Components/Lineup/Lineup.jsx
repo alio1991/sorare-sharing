@@ -91,9 +91,9 @@ export function Lineup({id, onLineupOwnersChange}){
         ))].map(owner => {
             return <div key={owner}>
                 <div className="user-transaction">
-                    <h3 className="from">{owner}</h3>
-                    <h3>{'  ==> '}</h3>
-                    <h3 className="to">{lineupOwner}</h3>
+                    <h5 className="from">{owner}</h5>
+                    <h5>{'==>'}</h5>
+                    <h5 className="to">{lineupOwner}</h5>
                 </div>
                 
                 <b>{playerOwners.filter(tuple => tuple[0]===owner).map((player, i)=> <li key={i}>{player[1]}</li>)}</b>

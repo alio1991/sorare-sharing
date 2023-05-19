@@ -43,7 +43,9 @@ export function PriceBlock({card}){
     }
 
     function formatPrice(price){
-        if(!price || price === 0){
+
+        //Si el precio no existe ||  es 0  || es menos de 0,1
+        if(!price || price === 0 || Math.abs(price) * 100 < 10){
             return ""
         }else if(price<10){
             return price.toFixed(1);

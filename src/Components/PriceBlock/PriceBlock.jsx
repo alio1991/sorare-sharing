@@ -19,11 +19,11 @@ export function PriceBlock({card}){
     return( 
         <div className="price-block">
             <div className={`price ${getColor(card?.minPrice?.eur)} ${isDateRecent(card?.priceChangeDate)&&'is-recent'}`}>
-                <h3>{formatPrice(card?.minPrice?.eur)}</h3>
+                <h3>{formatPrice(card?.minPrice?.eur)}€</h3>
             </div>
-            {formatPrice(buyPrice)&&<div className={`on-sale ${card.onSale ? 'green' : 'normal'}`}><h3>{formatPrice(buyPrice)}</h3></div>}
+            {formatPrice(buyPrice)&&<div className={`on-sale ${card.onSale ? 'green' : 'normal'}`}><h3>{formatPrice(buyPrice) ? formatPrice(buyPrice)+'€': ""}</h3></div>}
             {formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur) ? <div className={formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)>=0 ? 'prev-price price-border green' : 'prev-price price-border red'}>
-                <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}</h3>
+                <h3>{formatPrice(card?.minPrice?.eur-card?.prevPrice?.eur)}€</h3>
             </div> : <div className="prev-price"></div>}
             
         </div>
@@ -46,9 +46,9 @@ export function PriceBlock({card}){
         if(!price || price === 0){
             return ""
         }else if(price<10){
-            return price.toFixed(1)+"€";
+            return price.toFixed(1);
         }else{
-            return Math.round(price)+"€"
+            return Math.round(price)
         }
     }
 

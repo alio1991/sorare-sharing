@@ -53,6 +53,7 @@ export function PlayerCard({cardId, wholeCard}){
                 className={`player-card ${wholeCard.positionTyped.toLowerCase()}-border`}
                 draggable="true"
                 onDragStart={handleDragStart}
+                onClick={()=> redirectsToSorareCard(wholeCard, false)}
             >
                 <h3>{`${wholeCard?.player.firstName} ${wholeCard?.player.lastName}`}</h3>
                 <img src={wholeCard?.player.pictureUrl} alt="" />
@@ -63,9 +64,14 @@ export function PlayerCard({cardId, wholeCard}){
         return "x"
     }
 
-    function redirectsToSorareCard(card){
-        const url = 'https://sorare.com/football/cards/'+card?.slug;
-        window.open(url, "_blank");
+    function redirectsToSorareCard(card, isOwnCard=true){
+        if(isOwnCard){
+            const url = 'https://sorare.com/football/cards/'+card?.slug;
+            window.open(url, "_blank");
+        }else{
+            const url = `https://sorare.com/football/players/${card?.player.slug}/cards?sale=true`;
+            window.open(url, "_blank");
+        }
     }
 
     

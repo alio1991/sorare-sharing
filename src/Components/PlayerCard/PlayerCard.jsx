@@ -55,7 +55,6 @@ export function PlayerCard({cardId, wholeCard}){
         );
     }else if(wholeCard){
         //For price view
-        console.log('wholeCard', wholeCard);
         return(
             <div 
                 className={`player-card ${wholeCard.positionTyped.toLowerCase()}-border`}

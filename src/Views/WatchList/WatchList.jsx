@@ -1,6 +1,6 @@
 import './WatchList.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { whatchListPlayers, getWatchListPlayersWithMinPrices, whatchListPlayersLoadingFlag } from '../../Services/store'
+import { whatchListPlayers, getWatchListPlayersWithMinPrices, whatchListPlayersLoadingFlag, updateWhatchlistPlayer } from '../../Services/store'
 import { getRandomCardFromPlayerSlug } from '../../Services/cards'
 import { useEffect, useState } from 'react';
 import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
@@ -30,6 +30,7 @@ function WatchList() {
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
                         <div onClick={()=> deleteCard(card.player.slug)} className="delete">X</div>
+                        <div onClick={()=> updateWhatchlistPlayer(card)} className="update-price">$</div>
                         <PlayerCard wholeCard={card} ></PlayerCard>
                         {card?.minPrice && <div className="price-section">
                             <PriceBlock card={card}></PriceBlock>

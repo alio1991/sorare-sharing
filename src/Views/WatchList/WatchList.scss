@@ -48,17 +48,36 @@
             .delete{
                 cursor: pointer;
                 position: absolute;
-                top: -16px;
-                left: -16px;
+                top: 0;
+                left: 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 40px;
-                height: 40px;
+                width: 30px;
+                height: 30px;
                 border-radius: 50%;
                 background-color: #ec7878;
                 border: 1px solid black;
                 z-index: 2;
+            }
+
+            .update-price{
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #44ccee;
+                border: 1px solid black;
+                z-index: 1;
+                &:hover{
+                    background-color: #ee44d4;
+                }
             }
 
             .price-section{

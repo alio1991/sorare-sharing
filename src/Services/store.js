@@ -105,6 +105,23 @@ export function getWatchListPlayersWithMinPrices(){
   });
 }
 
+export function updateWhatchlistPlayer(card){
+  whatchListPlayersLoadingFlag.next(true)
+  const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+    const cardCopy = Object.assign({}, card);
+    cardCopy.prevPrice = cardCopy.minPrice;
+    cardCopy.priceChangeDate = new Date().getTime();;
+    cardCopy.minPrice = res.content;
+    const prevcards = whatchListPlayers.value;
+    const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+    whatchListPlayers.next([...filteredcards, cardCopy])
+    whatchListPlayersLoadingFlag.next(false)
+  }).catch(error => {
+    console.log('Error', error);
+    playersPricesLoadingFlag.next(false)
+  });
+}
+
 
 const getUsersInfo = () => {
   clearOldData()

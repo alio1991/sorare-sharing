@@ -1,6 +1,6 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers, playersPricesLoadingFlag } from '../../Services/store'
+import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers, playersPricesLoadingFlag, updateMinPriceOfPlayer } from '../../Services/store'
 import { useEffect, useState } from 'react';
 import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
 import { Button } from 'antd';
@@ -34,6 +34,7 @@ function CardPrices() {
                 .sort((a,b)=> b.minPrice?.eur-a.minPrice?.eur)
                 .map((card, i)=> 
                     <div key={i} className="card-with-price">
+                        <div onClick={()=> updateMinPriceOfPlayer(card)} className="update-price">$</div>
                         <PlayerCard cardId={card.id} ></PlayerCard>
                         <div className="price-section">
                             <PriceBlock card={card}></PriceBlock>
@@ -43,6 +44,7 @@ function CardPrices() {
             </div>
         </div>
     )
+
 
     function filterOldPlayers(allCards, minPriceCards){
         if(allCards?.length && minPriceCards?.length){

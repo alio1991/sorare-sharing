@@ -29,7 +29,14 @@ export function PlayerCard({cardId, wholeCard}){
             >
                 <h3>{`${card?.player.firstName} ${card?.player.lastName}`}</h3>
                 <img className="player-img" src={card?.player.pictureUrl} alt="" />
-                <div className={`score ${getScoreColor(card.player.averageScore)}`}>{card.player.averageScore}</div>
+                {card?.so5Scores[0]?.score}
+
+                <div className={`score ${getScoreColor(card.player.averageScore)}`}>
+                    {card.player.averageScore}
+                    <div className='last-scores'>
+                        {card?.so5Scores.map((scoreInfo, i) => <div className={i === 0 ? "last-puntuation last-score" : "last-score"} key={i}>{scoreInfo.score}</div>)}
+                    </div>
+                </div>
                 <div className="owner">{card.owner}</div>
                 {
                     ['next-game', 'second-next-game', 'third-next-game'].map((slot, i) => {
@@ -48,6 +55,7 @@ export function PlayerCard({cardId, wholeCard}){
         );
     }else if(wholeCard){
         //For price view
+        console.log('wholeCard', wholeCard);
         return(
             <div 
                 className={`player-card ${wholeCard.positionTyped.toLowerCase()}-border`}
@@ -57,7 +65,12 @@ export function PlayerCard({cardId, wholeCard}){
             >
                 <h3>{`${wholeCard?.player.firstName} ${wholeCard?.player.lastName}`}</h3>
                 <img src={wholeCard?.player.pictureUrl} alt="" />
-                <div className={`score ${getScoreColor(wholeCard.player.averageScore)}`}>{wholeCard.player.averageScore}</div>
+                <div className={`score ${getScoreColor(wholeCard.player.averageScore)}`}>
+                    {wholeCard.player.averageScore}
+                    <div className='last-scores'>
+                        {wholeCard?.so5Scores.map((scoreInfo, i) => <div className={i === 0 ? "last-puntuation last-score" : "last-score"} key={i}>{scoreInfo.score}</div>)}
+                    </div>
+                </div>
             </div>
         );
     }else{

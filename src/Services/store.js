@@ -62,6 +62,25 @@ export function getPlayersWithMinPrices(){
   });
 }
 
+export async function updateMinPriceOfPlayer(card){
+  playersPricesLoadingFlag.next(true)
+
+  await getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+    const prevPrice = playerCardsWithMinPrices.value.find(playerCard => playerCard.id === card.id)?.minPrice;
+    const cardCopy = Object.assign({}, card);
+    cardCopy.prevPrice = prevPrice;
+    cardCopy.priceChangeDate = new Date().getTime();;
+    cardCopy.minPrice = res.content;
+    const prevcards = playerCardsWithMinPrices.value;
+    const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+    playerCardsWithMinPrices.next([...filteredcards, cardCopy])
+    playersPricesLoadingFlag.next(false)
+  }).catch(error => {
+    console.log('Error', error);
+    playersPricesLoadingFlag.next(false)
+  });
+}
+
 export function getWatchListPlayersWithMinPrices(){
   whatchListPlayersLoadingFlag.next(true)
   const promises = [];
@@ -85,6 +104,7 @@ export function getWatchListPlayersWithMinPrices(){
     whatchListPlayersLoadingFlag.next(false)
   });
 }
+
 
 const getUsersInfo = () => {
   clearOldData()

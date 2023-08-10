@@ -32,6 +32,26 @@
         .card-with-price{
             position: relative;
             margin-bottom: 35px;
+
+            .update-price{
+                cursor: pointer;
+                position: absolute;
+                top: 0;
+                right: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                background-color: #44ccee;
+                border: 1px solid black;
+                z-index: 1;
+                &:hover{
+                    background-color: #ee44d4;
+                }
+            }
+            
         }
   
       }

@@ -80,8 +80,19 @@ export function Lineup({id, onLineupOwnersChange}){
                     {transactionsRender().length ? transactionsRender() : <h1> OK!</h1>}
                 </div>
             </div>
+            <div className='last-estimated-score'>
+                <p>Resultados:</p>
+                {getEstimatedPoints()}
+            </div>
         </div>
     );
+
+    function getEstimatedPoints(){
+        const positionIds = [extraId, forwardId, midfielderId, defenderId, goalkeeperId];
+        const playerScores = positionIds.map(positionId => positionId===null ? 0 : allPlayers.value.find(card => card.id === positionId)?.so5Scores[0].score);
+        const result = playerScores.reduce((acc, curr) => acc+curr, 0);
+        return result.toFixed(1) + " pts"
+    }
 
     function transactionsRender(){
         return [...new Set(playerOwners.filter(

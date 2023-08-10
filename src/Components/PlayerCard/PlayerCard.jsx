@@ -29,8 +29,6 @@ export function PlayerCard({cardId, wholeCard}){
             >
                 <h3>{`${card?.player.firstName} ${card?.player.lastName}`}</h3>
                 <img className="player-img" src={card?.player.pictureUrl} alt="" />
-                {card?.so5Scores[0]?.score}
-
                 <div className={`score ${getScoreColor(card.player.averageScore)}`}>
                     {card.player.averageScore}
                     <div className='last-scores'>

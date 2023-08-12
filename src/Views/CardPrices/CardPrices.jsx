@@ -26,7 +26,7 @@ function CardPrices() {
 
     return (
         <div className="card-prices">
-            <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card?.minPrice?.eur+acc, 0))}€</h2>
+            <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card?.minPrice?.eur ? card?.minPrice?.eur+acc : acc, 0))}€</h2>
             <Button type="primary" loading={isUpdatePriceButtonLoading} onClick={() => getPlayersWithMinPrices()}> Actualizar Precios </Button>
 
             <div className="player-cards">

@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { PlayerCard } from '../PlayerCard/PlayerCard';
 import './Lineup.scss';
 import { addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner, deleteLineup } from "../../Services/customLineups"
-import { allPlayers, users } from '../../../src/Services/store'
+import { allPlayers, nextGameWeek, users } from '../../../src/Services/store'
 import { skipWhile } from 'rxjs';
 
 export function Lineup({id, onLineupOwnersChange}){
+
+    const [currentGameweek, setcurrentGameweek] = useState(null)
 
     const [lineupId, setlineupId] = useState(null)
     const [totalScore, settotalScore] = useState(0)
@@ -18,7 +20,13 @@ export function Lineup({id, onLineupOwnersChange}){
     const [defenderId, setdefenderId] = useState(null)
     const [goalkeeperId, setgoalkeeperId] = useState(null)
 
+    const [cardScores, setcardScores] = useState([])
 
+
+    useEffect(()=> {
+        nextGameWeek.subscribe(gameWeek => setcurrentGameweek(gameWeek-1))
+        getEstimatedPoints()
+    },[])
     useEffect(()=> {
             addLineupOwner(lineupId, lineupOwner)
             generateOwners(lineupOwner)
@@ -26,6 +34,7 @@ export function Lineup({id, onLineupOwnersChange}){
 
     useEffect(()=> {
             generateOwners(lineupOwner)
+            getEstimatedPoints()
     },[extraId,forwardId,midfielderId,defenderId,goalkeeperId])
 
     useEffect(() => {
@@ -43,6 +52,7 @@ export function Lineup({id, onLineupOwnersChange}){
     return(
         <div className="lineup">
             <div onClick={()=> preDeleteLineup(id)} className="delete-lineup">X</div>
+            <div onClick={()=> getEstimatedPoints()} className="update-points">Act Pts</div>
 
             <div className="lineup-total-score">
                 <h1>{totalScore}</h1><h3 className={240-totalScore>0 ? 'score-diff-green' : 'score-diff-red'}>{240-totalScore}</h3>
@@ -50,22 +60,27 @@ export function Lineup({id, onLineupOwnersChange}){
             <div className="slot extra extra-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setextraId, "extra")}>
                 {extraId ? <div onClick={()=> deleteCard('extra', extraId)} className="delete">X</div> : ''}
                 {extraId ? <PlayerCard cardId={extraId}></PlayerCard> : "Extra"}
+                <div className='current-slot-score'>{cardScores.find(card=> card.id===extraId)?.score ?? 'X'}</div>
             </div>
             <div className="slot forward forward-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setforwardId, "forward")}>
                 {forwardId ? <div onClick={()=> deleteCard('forward', forwardId)} className="delete">X</div> : ''}
                 {forwardId ? <PlayerCard cardId={forwardId}></PlayerCard> : "Delantero"}
+                <div className='current-slot-score'>{cardScores.find(card=> card.id===forwardId)?.score ?? 'X'}</div>
             </div>
             <div className="slot midfielder midfielder-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setmidfielderId, "midfielder")}>
                 {midfielderId ? <div onClick={()=> deleteCard('midfielder', midfielderId)} className="delete">X</div> : ''}
                 {midfielderId ? <PlayerCard cardId={midfielderId}></PlayerCard> : "Medio"}
+                <div className='current-slot-score'>{cardScores.find(card=> card.id===midfielderId)?.score ?? 'X'}</div>
             </div>
             <div className="slot defender defender-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setdefenderId, "defender")}>
                 {defenderId ? <div onClick={()=> deleteCard('defender', defenderId)} className="delete">X</div> : ''}
                 {defenderId ? <PlayerCard cardId={defenderId}></PlayerCard> : "Defensa"}
+                <div className='current-slot-score'>{cardScores.find(card=> card.id===defenderId)?.score ?? 'X'}</div>
             </div>
             <div className="slot goalkeeper goalkeeper-border" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev, setgoalkeeperId, "goalkeeper")}>
                 {goalkeeperId ? <div onClick={()=> deleteCard('goalkeeper', goalkeeperId)} className="delete">X</div> : ''}
                 {goalkeeperId ? <PlayerCard cardId={goalkeeperId}></PlayerCard> : "Portero"}
+                <div className='current-slot-score'>{cardScores.find(card=> card.id===goalkeeperId)?.score}</div>
             </div>
             <div className="transactions">
                 <select onChange={onLineupOwnerChange} value={lineupOwner || 'Selecciona un Propietario'}>
@@ -81,17 +96,25 @@ export function Lineup({id, onLineupOwnersChange}){
                 </div>
             </div>
             <div className='last-estimated-score'>
-                <p>Resultados:</p>
-                {getEstimatedPoints()}
+                <p>Resultados: {currentGameweek}</p>
+                {cardScores.reduce((acc, curr) => curr.score ? acc+curr.score : acc, 0)}
             </div>
         </div>
     );
 
     function getEstimatedPoints(){
         const positionIds = [extraId, forwardId, midfielderId, defenderId, goalkeeperId];
-        const playerScores = positionIds.map(positionId => positionId===null ? 0 : allPlayers.value.find(card => card.id === positionId)?.so5Scores[0].score);
-        const result = playerScores.reduce((acc, curr) => acc+curr, 0);
-        return result.toFixed(1) + " pts"
+        const playerScores = positionIds.map(positionId => {
+            const card = allPlayers.value.find(card => card.id === positionId);
+
+            const totalScore = currentGameweek === card?.so5Scores[0]?.game?.so5Fixture?.gameWeek ? 
+            positionId===null ? 0 : card?.so5Scores[0].score :
+            0;
+
+            return {score: totalScore, id: positionId}
+        });
+
+        setcardScores(playerScores)
     }
 
     function transactionsRender(){

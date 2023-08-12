@@ -22,6 +22,25 @@
         border: 1px solid black
     }
 
+    .update-points{
+        &:hover{
+            background-color: #78ec78;
+        }
+
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        right: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #78c7ec;
+        border: 1px solid black
+    }
+
     .slot{
         position: absolute;
         width: 150px;
@@ -42,6 +61,21 @@
             border-radius: 50%;
             background-color: #ec7878;
             border: 1px solid black
+        }
+
+        .current-slot-score{
+            position: absolute;
+            bottom: -55px;
+            left: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgb(31, 194, 216);
+            border: 1px solid black;
+            font-weight: bold;
         }
     }
 
@@ -131,7 +165,7 @@
         font-size: 2rem;
         border-top-left-radius: 1rem;
         p{
-            font-size: 1.5rem;
+            font-size: 1.1rem;
 
         }
     }

@@ -71,7 +71,7 @@ export function PlayerCard({cardId, wholeCard}){
             </div>
         );
     }else{
-        return "x"
+        return ""
     }
 
     function redirectsToSorareCard(card, isOwnCard=true){

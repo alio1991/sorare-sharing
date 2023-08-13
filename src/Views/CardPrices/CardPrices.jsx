@@ -45,7 +45,7 @@ function CardPrices() {
                     )}
                 </div>
                 <div className="to-buy" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>
-                        <h2 className='buy-price'>{cardsToBuy.reduce((acc, curr) => curr?.minPrice?.eur ? acc+curr?.minPrice?.eur : acc, 0).toFixed(1)}€</h2>
+                        <h2 className='buy-price'>{cardsToBuy.reduce((acc, curr) => curr?.minPrice?.eur ? acc+curr?.minPrice?.eur : acc, 0).toFixed(1)*0.95}€</h2>
                         <div className='buy-cards'>
                             {cardsToBuy.map((card, i) => 
                                 <div className="card" key={i}>

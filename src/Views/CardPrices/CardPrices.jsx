@@ -9,6 +9,7 @@ function CardPrices() {
 
     const [minPriceCards, setminPriceCards] = useState([])
     const [allCards, setallCards] = useState([])
+    const [cardsToBuy, setcardsToBuy] = useState([])
 
     const [filteredCards, setfilteredCards] = useState([])
 
@@ -29,22 +30,53 @@ function CardPrices() {
             <h2>Precio Total Actual: {formatPrice(filteredCards.reduce((acc, card)=> card?.minPrice?.eur ? card?.minPrice?.eur+acc : acc, 0))}€</h2>
             <Button type="primary" loading={isUpdatePriceButtonLoading} onClick={() => getPlayersWithMinPrices()}> Actualizar Precios </Button>
 
-            <div className="player-cards">
-                {filteredCards
-                .sort((a,b)=> b.minPrice?.eur-a.minPrice?.eur)
-                .map((card, i)=> 
-                    <div key={i} className="card-with-price">
-                        <div onClick={()=> updateMinPriceOfPlayer(card)} className="update-price">$</div>
-                        <PlayerCard cardId={card.id} ></PlayerCard>
-                        <div className="price-section">
-                            <PriceBlock card={card}></PriceBlock>
+            <div className='cards'>
+                <div className="player-cards">
+                    {filteredCards
+                    .sort((a,b)=> b.minPrice?.eur-a.minPrice?.eur)
+                    .map((card, i)=> 
+                        <div key={i} className="card-with-price">
+                            <div onClick={()=> updateMinPriceOfPlayer(card)} className="update-price">$</div>
+                            <PlayerCard cardId={card.id} ></PlayerCard>
+                            <div className="price-section">
+                                <PriceBlock card={card}></PriceBlock>
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                <div className="to-buy" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>
+                        <h2 className='buy-price'>{cardsToBuy.reduce((acc, curr) => curr?.minPrice?.eur ? acc+curr?.minPrice?.eur : acc, 0).toFixed(1)}€</h2>
+                        <div className='buy-cards'>
+                            {cardsToBuy.map((card, i) => 
+                                <div className="card" key={i}>
+                                    <div onClick={()=> restoreCard(card.id)} className="delete">X</div>
+                                    <PlayerCard cardId={card.id}></PlayerCard>
+                                    <PriceBlock card={card}></PriceBlock>
+                                </div> 
+                            )}
+                        </div>
+                </div>
             </div>
         </div>
     )
 
+    function restoreCard(id){
+        const card = cardsToBuy.find(card=> card.id === id)
+        cardsToBuy.filter(card => card.id !== id)
+        setcardsToBuy(prev => prev.filter(card => card.id !== id))
+        setfilteredCards(prev => [...prev, card])
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+    }
+
+    function handleDrop(event) {
+        const cardId = event.dataTransfer.getData("text/html");
+        const card = minPriceCards.find(player => player.id===cardId);
+        setcardsToBuy(prev => [...prev, card])
+        setfilteredCards(prev => prev.filter(card => card.id !== cardId))
+    }
 
     function filterOldPlayers(allCards, minPriceCards){
         if(allCards?.length && minPriceCards?.length){

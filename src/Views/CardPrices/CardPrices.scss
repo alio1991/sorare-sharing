@@ -20,39 +20,83 @@
     h3{
         text-align: center;
     }
-    .player-cards{
+
+    .cards{
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        width: 95%;
-        flex: 3;
-        box-sizing: border-box;
-        overflow-y: scroll;
+        width: 100%;
+        height: fit-content;
 
-        .card-with-price{
-            position: relative;
-            margin-bottom: 35px;
+        .to-buy{
+            width: 25%;
+            min-height: 300px;
+            height: fit-content;
+            background-color: rgb(242, 156, 86);
 
-            .update-price{
-                cursor: pointer;
-                position: absolute;
-                top: 0;
-                right: 0;
+            .buy-price{
+                height: fit-content;
+                padding: 0.5rem;
+                width: fit-content;
+                background-color: hsl(118, 95%, 67%);
+            }
+            .buy-cards{
                 display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background-color: #44ccee;
-                border: 1px solid black;
-                z-index: 1;
-                &:hover{
-                    background-color: #ee44d4;
+                flex-wrap: wrap;
+                width: 100%;
+
+                .card{
+                    position: relative;
+
+                    .delete{
+                        cursor: pointer;
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        background-color: #ec7878;
+                        border: 1px solid black;
+                        z-index: 2;
+                    }
+                }
+
+            }
+        }
+        .player-cards{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 75%;
+            flex: 3;
+            box-sizing: border-box;
+            overflow-y: scroll;
+    
+            .card-with-price{
+                position: relative;
+                margin-bottom: 35px;
+    
+                .update-price{
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background-color: #44ccee;
+                    border: 1px solid black;
+                    z-index: 1;
+                    &:hover{
+                        background-color: #ee44d4;
+                    }
                 }
             }
-            
         }
-  
-      }
+    }
 }

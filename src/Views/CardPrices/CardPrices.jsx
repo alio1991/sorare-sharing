@@ -38,14 +38,12 @@ function CardPrices() {
                         <div key={i} className="card-with-price">
                             <div onClick={()=> updateMinPriceOfPlayer(card)} className="update-price">$</div>
                             <PlayerCard cardId={card.id} ></PlayerCard>
-                            <div className="price-section">
-                                <PriceBlock card={card}></PriceBlock>
-                            </div>
+                            <PriceBlock card={card}></PriceBlock>
                         </div>
                     )}
                 </div>
                 <div className="to-buy" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>
-                        <h2 className='buy-price'>{cardsToBuy.reduce((acc, curr) => curr?.minPrice?.eur ? acc+curr?.minPrice?.eur : acc, 0).toFixed(1)*0.95}€</h2>
+                        <h2 className='buy-price'>{(cardsToBuy.reduce((acc, curr) => curr?.minPrice?.eur ? acc+curr?.minPrice?.eur : acc, 0)*0.95).toFixed(1)}€</h2>
                         <div className='buy-cards'>
                             {cardsToBuy.map((card, i) => 
                                 <div className="card" key={i}>

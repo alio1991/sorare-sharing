@@ -42,10 +42,12 @@
                 display: flex;
                 flex-wrap: wrap;
                 width: 100%;
+                justify-content: center;
 
                 .card{
                     position: relative;
-
+                    margin-bottom: 1rem;
+                    
                     .delete{
                         cursor: pointer;
                         position: absolute;

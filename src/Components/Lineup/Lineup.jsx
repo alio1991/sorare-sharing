@@ -96,8 +96,8 @@ export function Lineup({id, onLineupOwnersChange}){
                 </div>
             </div>
             <div className='last-estimated-score'>
-                <p>Resultados: {currentGameweek}</p>
-                {cardScores.reduce((acc, curr) => curr.score ? acc+curr.score : acc, 0)}
+                <p>Gameweek {currentGameweek}</p>
+                {cardScores.reduce((acc, curr) => curr.score ? acc+curr.score : acc, 0).toFixed(1) + " pts"}
             </div>
         </div>
     );

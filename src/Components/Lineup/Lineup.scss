@@ -154,8 +154,10 @@
     }
     
     .last-estimated-score{
+        display: flex;
+        flex-direction: column;
         position: absolute;
-        padding: 0.5rem;
+        padding: 0.3rem;
         right: 0;
         bottom: 0;
         width: fit-content;

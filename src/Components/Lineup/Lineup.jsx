@@ -4,10 +4,13 @@ import './Lineup.scss';
 import { addPlayerToLineup, lineups, deleteCardFromLineup, getPlayer, addLineupOwner, deleteLineup } from "../../Services/customLineups"
 import { allPlayers, nextGameWeek, users } from '../../../src/Services/store'
 import { skipWhile } from 'rxjs';
+import { Select } from 'antd';
 
 export function Lineup({id, onLineupOwnersChange}){
 
     const [currentGameweek, setcurrentGameweek] = useState(null)
+    const [selectedGameweek, setselectedGameweek] = useState(null)
+    const [gameweekOptions, setgameweekOptions] = useState([])
 
     const [lineupId, setlineupId] = useState(null)
     const [totalScore, settotalScore] = useState(0)
@@ -24,7 +27,14 @@ export function Lineup({id, onLineupOwnersChange}){
 
 
     useEffect(()=> {
-        nextGameWeek.subscribe(gameWeek => setcurrentGameweek(gameWeek-1))
+        nextGameWeek.subscribe(gameWeek => {
+            setcurrentGameweek(gameWeek); 
+            setselectedGameweek(gameWeek); 
+            setgameweekOptions([
+                { value: gameWeek || 0, label: 'Gameweek '+(gameWeek) },
+                { value: (gameWeek-1) || 0, label: 'Gameweek '+(gameWeek-1) },
+                { value: (gameWeek-2) || 0, label: 'Gameweek '+(gameWeek-2) },
+              ])})
         getEstimatedPoints()
     },[])
     useEffect(()=> {
@@ -96,20 +106,28 @@ export function Lineup({id, onLineupOwnersChange}){
                 </div>
             </div>
             <div className='last-estimated-score'>
-                <p>Gameweek {currentGameweek}</p>
-                {cardScores.reduce((acc, curr) => curr.score ? acc+curr.score : acc, 0).toFixed(1) + " pts"}
+                <Select
+                    value={selectedGameweek}
+                    onChange={handleGameweekChange}
+                    options={gameweekOptions}
+                />
+                
+                {cardScores.reduce((acc, curr) => curr.score ? acc+curr.score : acc, 0)?.toFixed(1) + " pts"}
             </div>
         </div>
     );
+
+    function handleGameweekChange(gameweek){
+        setselectedGameweek(gameweek)
+        getEstimatedPoints()
+    }
 
     function getEstimatedPoints(){
         const positionIds = [extraId, forwardId, midfielderId, defenderId, goalkeeperId];
         const playerScores = positionIds.map(positionId => {
             const card = allPlayers.value.find(card => card.id === positionId);
-
-            const totalScore = currentGameweek === card?.so5Scores[0]?.game?.so5Fixture?.gameWeek ? 
-            positionId===null ? 0 : card?.so5Scores[0].score :
-            0;
+            const selectedGameweekScore = card?.so5Scores.find(score => score.game?.so5Fixture?.gameWeek === selectedGameweek);
+            const totalScore  = selectedGameweekScore ? positionId===null ? null : selectedGameweekScore.score : null;
 
             return {score: totalScore, id: positionId}
         });

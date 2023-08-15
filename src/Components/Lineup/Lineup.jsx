@@ -28,12 +28,12 @@ export function Lineup({id, onLineupOwnersChange}){
 
     useEffect(()=> {
         nextGameWeek.subscribe(gameWeek => {
-            setcurrentGameweek(gameWeek); 
-            setselectedGameweek(gameWeek); 
+            setcurrentGameweek(gameWeek-1); 
+            setselectedGameweek(gameWeek-1); 
             setgameweekOptions([
-                { value: gameWeek || 0, label: 'Gameweek '+(gameWeek) },
                 { value: (gameWeek-1) || 0, label: 'Gameweek '+(gameWeek-1) },
                 { value: (gameWeek-2) || 0, label: 'Gameweek '+(gameWeek-2) },
+                { value: (gameWeek-3) || 0, label: 'Gameweek '+(gameWeek-3) },
               ])})
         getEstimatedPoints()
     },[])
@@ -46,6 +46,10 @@ export function Lineup({id, onLineupOwnersChange}){
             generateOwners(lineupOwner)
             getEstimatedPoints()
     },[extraId,forwardId,midfielderId,defenderId,goalkeeperId])
+
+    useEffect(()=> {
+            getEstimatedPoints()
+    },[selectedGameweek])
 
     useEffect(() => {
         if(id){
@@ -119,7 +123,6 @@ export function Lineup({id, onLineupOwnersChange}){
 
     function handleGameweekChange(gameweek){
         setselectedGameweek(gameweek)
-        getEstimatedPoints()
     }
 
     function getEstimatedPoints(){

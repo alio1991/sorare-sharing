@@ -12,7 +12,9 @@ export function PlayerCard({cardId, wholeCard}){
     },[])
 
     useEffect(()=>{
-        setupcomingGames(card?.player?.activeClub?.upcomingGames)
+        const nationalTeamEvents = card?.player?.activeNationalTeam?.upcomingGames || [];
+        const clubTeamEvents = card?.player?.activeClub?.upcomingGames || [];
+        setupcomingGames([...clubTeamEvents, ...nationalTeamEvents])
     },[card])
 
     useEffect(()=>{

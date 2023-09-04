@@ -1,5 +1,5 @@
 import './lineups.scss';
-import { playersByUser, users } from '../../../src/Services/store'
+import { nextGameWeek, playersByUser, users } from '../../../src/Services/store'
 import { filteredAvailablePlayers, rejectFromAvailables, lineups, addNewLineup } from '../../../src/Services/customLineups'
 import { UserTag } from '../../Components/UserTag/UserTag';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
@@ -39,6 +39,11 @@ function Lineups() {
           <div className="user-tags">
             {Object.keys(cardsByUser).map((user, i)=> <UserTag onUsetTagSelected={onUsetTagSelected} name={user} cards={cardsByUser[user]} key={i}></UserTag>)}
           </div>
+          <div className="available-players-only-button">
+            <div className="user-tag" onClick={()=> setOnlyAvailables()}>
+              <p>Solo disponibles</p>
+            </div>
+          </div>
           <div className="rubbish" onDragOver={handleDragOver} onDrop={(ev) => handleDrop(ev)}>Apartar</div>
         </div>
   
@@ -70,6 +75,14 @@ function Lineups() {
   
     function handleDragOver(event) {
       event.preventDefault();
+    }
+
+    function setOnlyAvailables(){
+      setcardsFiltered(prev => prev.filter(card => {
+        return card?.player?.activeClub?.upcomingGames.some(game=> game.so5Fixture?.gameWeek === nextGameWeek.value)
+        ||
+        card?.player?.activeNationalTeam?.upcomingGames.some(game=> game.so5Fixture?.gameWeek === nextGameWeek.value);
+      }))
     }
   
     function handleDrop(event) {

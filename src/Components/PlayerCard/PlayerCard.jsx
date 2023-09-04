@@ -42,7 +42,7 @@ export function PlayerCard({cardId, wholeCard}){
                     ['next-game', 'second-next-game', 'third-next-game'].map((slot, i) => {
                         return <div key={i} className={`game ${slot}`}> 
                                     {someTeamInThisSlot(i) ? 
-                                        <img src={getOppositeTeamImage(card?.player?.activeClub?.name, i)} alt="club" />
+                                        <img src={getOppositeTeamImage(card?.player, i)} alt="club" />
                                         :
                                         <div className="no-game"><p>{gameWeek+i}</p></div>
                                     }
@@ -91,10 +91,11 @@ export function PlayerCard({cardId, wholeCard}){
         return gameWeek&&upcomingGames?.map(event => event?.so5Fixture?.gameWeek).includes(gameWeek+slot) ? upcomingGames.find(event => event?.so5Fixture?.gameWeek===gameWeek+slot) : null;
     }
 
-    function getOppositeTeamImage(clubName, i){
+    function getOppositeTeamImage(player, i){
+        const teamNames = [player.activeClub?.name, player.activeNationalTeam?.name]
         const referencedGameWeek = gameWeek+i;
         const match = upcomingGames.find(game => game?.so5Fixture?.gameWeek === referencedGameWeek);
-        return match.awayTeam.name === clubName ? match?.homeTeam?.pictureUrl : match?.awayTeam?.pictureUrl;
+        return teamNames.includes(match.awayTeam.name) ? match?.homeTeam?.pictureUrl : match?.awayTeam?.pictureUrl;
     }
 
     function handleDragStart(event) {

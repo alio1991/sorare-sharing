@@ -10,6 +10,18 @@
       height: var(--header-height);
       display: flex;
 
+      .available-players-only-button{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 1rem;
+        font-weight: bold;
+
+        div{
+          background-color: rgb(49, 203, 230);
+        }
+      }
+
       .rubbish{
         display: flex;
         justify-content: center;

@@ -78,10 +78,11 @@ export function PlayerCard({cardId, wholeCard}){
 
     function redirectsToSorareCard(card, isOwnCard=true){
         if(isOwnCard){
-            const url = 'https://sorare.com/football/cards/'+card?.slug;
+            // const url = 'https://sorare.com/football/cards/'+card?.slug;
+            const url = `https://sorare.com/es/football/cards/${card?.slug}`;
             window.open(url, "_blank");
         }else{
-            const url = `https://sorare.com/football/players/${card?.player.slug}/cards?sale=true`;
+            const url = `https://sorare.com/football/players/${card?.player.slug}/cards?s=Lowest+Price&sale=true`;
             window.open(url, "_blank");
         }
     }

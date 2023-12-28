@@ -2,7 +2,7 @@ import { BehaviorSubject } from "rxjs"
 import { getCardsByUser, getCardsOnSaleByPlayerSlug, getNextGameWeek } from "./cards";
 
 
-export const users = new BehaviorSubject(["alioli1991", "alioaa", "aagudolopez", "pititos", "kso1991", "javicaso", "pititos2"]);
+export const users = new BehaviorSubject(["alioli1991", "alioaa", "aagudolopez", "pititos", "kso1991", "javicaso"]);
 export const allPlayers = new BehaviorSubject([]);
 export const nextGameWeek = new BehaviorSubject(null);
 export const playersByUser = new BehaviorSubject({});

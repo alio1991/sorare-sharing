@@ -47,7 +47,6 @@ function WatchList() {
             console.log('El jugador '+playerSlug+' ya está en la lista');
         }else{
             getRandomCardFromPlayerSlug(playerSlug).then(newCard => {
-                console.log('newCard',newCard);
                 whatchListPlayers.value?.filter(player => player.slug !== newCard.slug)
                 whatchListPlayers.next([...whatchListPlayers.value, newCard.content.anyPlayer])
             })

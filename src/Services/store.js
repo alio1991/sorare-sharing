@@ -85,13 +85,13 @@ export function getWatchListPlayersWithMinPrices(){
   whatchListPlayersLoadingFlag.next(true)
   const promises = [];
   whatchListPlayers.value.forEach(card=> {
-      const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+      const promise = getCardsOnSaleByPlayerSlug(card.slug).then(res => { 
         const cardCopy = Object.assign({}, card);
         cardCopy.prevPrice = cardCopy.minPrice;
         cardCopy.priceChangeDate = new Date().getTime();;
         cardCopy.minPrice = res.content;
         const prevcards = whatchListPlayers.value;
-        const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+        const filteredcards = prevcards.filter(card => card.slug!==cardCopy.slug)
         whatchListPlayers.next([...filteredcards, cardCopy])
       })
       promises.push(promise);

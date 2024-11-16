@@ -54,20 +54,21 @@ export function PlayerCard({cardId, wholeCard}){
             </div>
         );
     }else if(wholeCard){
-        //For price view
+        //For price view        
+        const position = wholeCard.positionTyped || wholeCard?.cardPositions && wholeCard?.cardPositions[0];
         return(
             <div 
-                className={`player-card ${wholeCard.positionTyped.toLowerCase()}-border`}
+                className={`player-card ${position.toLowerCase()}-border`}
                 draggable="true"
                 onDragStart={handleDragStart}
                 onClick={()=> redirectsToSorareCard(wholeCard, false)}
             >
-                <h3>{`${wholeCard?.player.firstName} ${wholeCard?.player.lastName}`}</h3>
-                <img src={wholeCard?.player.pictureUrl} alt="" />
-                <div className={`score ${getScoreColor(wholeCard.player.averageScore)}`}>
-                    {wholeCard.player.averageScore}
+                <h3>{`${wholeCard?.displayName}`}</h3>
+                <img src={wholeCard?.fullPictureUrl} alt="" />
+                <div className={`score ${getScoreColor(wholeCard.averageScore)}`}>
+                    {wholeCard.averageScore}
                     <div className='last-scores'>
-                        {wholeCard?.so5Scores.map((scoreInfo, i) => <div className={i === 0 ? "last-puntuation last-score" : "last-score"} key={i}>{scoreInfo.score}</div>)}
+                        {wholeCard?.playerGameScores.map((scoreInfo, i) => <div className={i === 0 ? "last-puntuation last-score" : "last-score"} key={i}>{scoreInfo.score}</div>)}
                     </div>
                 </div>
             </div>
@@ -82,7 +83,7 @@ export function PlayerCard({cardId, wholeCard}){
             const url = `https://sorare.com/es/football/cards/${card?.slug}`;
             window.open(url, "_blank");
         }else{
-            const url = `https://sorare.com/football/players/${card?.player.slug}/cards?s=Lowest+Price&sale=true`;
+            const url = `https://sorare.com/football/players/${card?.slug}/cards?s=Lowest+Price&sale=true`;
             window.open(url, "_blank");
         }
     }
@@ -96,7 +97,7 @@ export function PlayerCard({cardId, wholeCard}){
         const teamNames = [player.activeClub?.name, player.activeNationalTeam?.name]
         const referencedGameWeek = gameWeek+i;
         const match = upcomingGames.find(game => game?.so5Fixture?.gameWeek === referencedGameWeek);
-        return teamNames.includes(match.awayTeam.name) ? match?.homeTeam?.pictureUrl : match?.awayTeam?.pictureUrl;
+        return teamNames.includes(match.awayTeam?.name) ? match?.homeTeam?.pictureUrl : match?.awayTeam?.pictureUrl;
     }
 
     function handleDragStart(event) {

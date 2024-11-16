@@ -107,7 +107,7 @@ export function getWatchListPlayersWithMinPrices(){
 
 export function updateWhatchlistPlayer(card){
   whatchListPlayersLoadingFlag.next(true)
-  const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+  const promise = getCardsOnSaleByPlayerSlug(card.slug).then(res => { 
     const cardCopy = Object.assign({}, card);
     cardCopy.prevPrice = cardCopy.minPrice;
     cardCopy.priceChangeDate = new Date().getTime();;
@@ -127,8 +127,8 @@ const getUsersInfo = () => {
   clearOldData()
   users.value.forEach(user => {   
     getCardsByUser(user).then(res => { 
-      const {nickname, paginatedCards }= res.content.user;
-      const players = paginatedCards.nodes.map(node=> {node.owner = user; return node});
+      const {nickname, cards }= res.content.user;
+      const players = cards.nodes.map(node=> {node.owner = user; return node});
       allPlayers.next([...allPlayers.value, ...players])
       playersByUser.next({...playersByUser.value, [nickname]: players})
     })

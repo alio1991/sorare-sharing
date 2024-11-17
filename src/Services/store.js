@@ -39,8 +39,8 @@ whatchListPlayers.subscribe(cards => {
 export function getPlayersWithMinPrices(){
   playersPricesLoadingFlag.next(true)
   const promises = [];
-  allPlayers.value.forEach((card, index)=> {
-        const promise = getCardsOnSaleByPlayerSlug(card.player.slug).then(res => { 
+  allPlayers.value.forEach((card)=> {
+        const promise = getCardsOnSaleByPlayerSlug(card.player.slug, card.inSeasonEligible).then(res => { 
         const prevPrice = playerCardsWithMinPrices.value.find(playerCard => playerCard.id === card.id)?.minPrice;
         const cardCopy = Object.assign({}, card);
         cardCopy.prevPrice = prevPrice;
@@ -64,7 +64,7 @@ export function getPlayersWithMinPrices(){
 
 export async function updateMinPriceOfPlayer(card){
   playersPricesLoadingFlag.next(true)
-    
+
   await getCardsOnSaleByPlayerSlug(card.player.slug, card.inSeasonEligible).then(res => { 
     const prevPrice = playerCardsWithMinPrices.value.find(playerCard => playerCard.id === card.id)?.minPrice;
     const cardCopy = Object.assign({}, card);

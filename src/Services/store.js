@@ -113,7 +113,7 @@ export function updateWhatchlistPlayer(card){
     cardCopy.priceChangeDate = new Date().getTime();;
     cardCopy.minPrice = res.content;
     const prevcards = whatchListPlayers.value;
-    const filteredcards = prevcards.filter(card => card.id!==cardCopy.id)
+    const filteredcards = prevcards.filter(card => card.slug!==cardCopy.slug)
     whatchListPlayers.next([...filteredcards, cardCopy])
     whatchListPlayersLoadingFlag.next(false)
   }).catch(error => {

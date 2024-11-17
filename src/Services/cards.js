@@ -14,9 +14,9 @@ export const getRandomCardFromPlayerSlug = (slug)=>{
   return fetch(url).then((res) => res.json());
 }
 
-export const getCardsOnSaleByPlayerSlug = (slug)=>{
+export const getCardsOnSaleByPlayerSlug = (slug, inSeasonEligible)=>{
   const url = new URL("http://localhost:8080/onSaleCardsByPlayerSlug"),
-  params = {slug:slug}
+  params = {slug:slug, inSeasonEligible:inSeasonEligible}
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
   return fetch(url).then((res) => res.json());
 }

@@ -1,6 +1,6 @@
 import './CardPrices.scss';
 import { PlayerCard } from '../../Components/PlayerCard/PlayerCard';
-import { playerCardsWithMinPrices, users, getPlayersWithMinPrices, allPlayers, playersPricesLoadingFlag, updateMinPriceOfPlayer } from '../../Services/store'
+import { playerCardsWithMinPrices, getPlayersWithMinPrices, allPlayers, playersPricesLoadingFlag, updateMinPriceOfPlayer } from '../../Services/store'
 import { useEffect, useState } from 'react';
 import { PriceBlock } from '../../Components/PriceBlock/PriceBlock';
 import { Button } from 'antd';

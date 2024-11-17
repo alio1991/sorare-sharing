@@ -25,6 +25,7 @@ export function PlayerCard({cardId, wholeCard}){
         return(
             <div 
                 className={`player-card ${card.positionTyped.toLowerCase()}-border`}
+                style={{backgroundColor: card.inSeasonEligible ? 'rgb(242 153 48)' : '#f3e415'}}
                 draggable="true"
                 onDragStart={handleDragStart}
                 onClick={()=> redirectsToSorareCard(card)}
